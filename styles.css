@@ -1,0 +1,455 @@
+:root {
+  --color-bg: #EDEBE3;      /* crema */
+  --color-ink: #242424;     /* casi negro */
+  --header-h: 99px;
+  --gutter: 60px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 12px; }
+
+body {
+  font-family: 'Karla', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-ink);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { background: none; border: none; cursor: pointer; font: inherit; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ============ CABECERA ============ */
+/* Por defecto: fija en el flujo, texto tinta sobre fondo crema (páginas interiores) */
+.site-header {
+  position: relative;
+  z-index: 20;
+  height: var(--header-h);
+  padding: 0 var(--gutter);
+  color: var(--color-ink);
+}
+
+/* Variante portada: transparente superpuesta al hero, texto crema */
+.site-header--overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: var(--color-bg);
+}
+
+.site-header__wrapper {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 98px;
+}
+
+/* --- Menú izquierda --- */
+.site-header__nav { display: flex; align-items: center; }
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.site-nav__link {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 15px 0;
+  position: relative;
+  white-space: nowrap;
+}
+
+.site-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 12px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+
+.site-nav__link:hover::after,
+.site-nav__link.is-active::after { transform: scaleX(1); }
+
+/* --- Logo centrado --- */
+.site-header__logo {
+  text-align: center;
+  line-height: 1;
+  padding: 22px 0;
+}
+
+.site-header__logo-name {
+  display: block;
+  font-family: 'Proza Libre', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+}
+
+.site-header__logo-tagline {
+  display: block;
+  font-family: 'Karla', sans-serif;
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: .42em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  text-indent: .42em; /* compensa el tracking para centrar */
+}
+
+/* --- Iconos derecha --- */
+.site-header__icons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.lang-switcher {
+  position: relative;
+  margin-right: 12px;
+}
+
+.lang-switcher__toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 14px 0;
+}
+
+.lang-switcher__toggle svg { transition: transform .25s ease; }
+.lang-switcher.is-open .lang-switcher__toggle svg { transform: rotate(180deg); }
+
+.lang-switcher__list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  padding: 8px 12px;
+  display: none;
+  z-index: 30;
+}
+
+.lang-switcher.is-open .lang-switcher__list { display: block; }
+
+.lang-switcher__list a {
+  display: block;
+  font-size: 10px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 6px 0;
+  white-space: nowrap;
+}
+
+.lang-switcher__list a:hover { opacity: .6; }
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  position: relative;
+}
+
+.icon-btn svg { display: block; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.menu-toggle { display: none; }
+
+/* ============ HERO (portada) ============ */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* respaldo mientras el vídeo carga o si falla */
+  background-image: url("hero.jpg"),
+    linear-gradient(160deg, #b9a893 0%, #a89478 28%, #8f7a5f 55%, #6f5c46 82%, #5a4a38 100%);
+  background-size: cover;
+  background-position: center 85%;
+}
+
+/* velo sutil para que el menú crema lea bien sobre la imagen */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 30%);
+  pointer-events: none;
+}
+
+/* ============ PÁGINA DE COLECCIONES (Tienda) ============ */
+.page-title {
+  font-family: 'Proza Libre', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 50px var(--gutter) 10px;
+}
+
+.page-description {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 6px var(--gutter) 0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px var(--gutter);
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 50px var(--gutter) 90px;
+}
+
+.collection-card { text-align: center; }
+
+.collection-card__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #e3e0d5;
+}
+
+.collection-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s ease;
+}
+
+.collection-card:hover .collection-card__media img { transform: scale(1.04); }
+
+.collection-card__title {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.collection-card__badge {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .55;
+}
+
+/* ============ PÁGINA DE COLECCIÓN (listado de productos) ============ */
+.collection-layout {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 30px var(--gutter) 90px;
+}
+
+/* --- Rejilla de productos --- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px 30px;
+  align-content: start;
+}
+
+.product-card { text-align: center; }
+
+.product-card__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #e3e0d5;
+}
+
+.product-card__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* segunda imagen al pasar el ratón */
+.product-card__media img.alt {
+  opacity: 0;
+  transition: opacity .45s ease;
+}
+
+.product-card:hover .product-card__media img.alt { opacity: 1; }
+
+.product-card__title {
+  display: block;
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.product-card__price {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: .75;
+}
+
+/* --- Estado vacío (próximamente) --- */
+.collection-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 90px 20px;
+}
+
+.collection-empty__title {
+  font-family: 'Proza Libre', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.collection-empty__text {
+  margin-top: 14px;
+  font-size: 12px;
+  line-height: 1.6;
+  opacity: .7;
+}
+
+/* ============ PÁGINA PERSONALIZAR ============ */
+.page-content {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 20px var(--gutter) 0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.page-content p + p { margin-top: 14px; }
+
+.contact-form {
+  max-width: 420px;
+  margin: 40px auto 70px;
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.contact-form__field label {
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.contact-form__field input {
+  font: inherit;
+  color: var(--color-ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-ink);
+  padding: 8px 0;
+  border-radius: 0;
+  outline: none;
+}
+
+.contact-form__field input:focus { border-bottom-width: 2px; }
+
+.contact-form__submit {
+  margin-top: 12px;
+  align-self: center;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-bg);
+  background: var(--color-ink);
+  padding: 14px 46px;
+  transition: opacity .3s ease;
+}
+
+.contact-form__submit:hover { opacity: .85; }
+
+.page-photo {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 0 var(--gutter) 90px;
+}
+
+.page-photo img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* ============ Responsive ============ */
+@media screen and (max-width: 989px) {
+  .site-header { padding: 0 20px; }
+
+  .site-nav { gap: 18px; }
+  .site-nav__link { font-size: 9px; }
+
+  .site-header__logo-name { font-size: 18px; }
+  .site-header__logo-tagline { font-size: 7px; margin-top: 4px; }
+
+  .collection-grid { gap: 30px; padding: 30px 20px 60px; }
+  .collection-layout { padding: 20px 20px 60px; }
+}
+
+@media screen and (max-width: 767px) {
+  .site-nav { display: none; }
+
+  .menu-toggle { display: flex !important; }
+
+  .site-header__wrapper { grid-template-columns: auto 1fr auto; }
+  .site-header__logo { text-align: left; padding-left: 6px; }
+  .lang-switcher { display: none; }
+
+  .collection-grid { grid-template-columns: 1fr; }
+
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 30px 15px; }
+}

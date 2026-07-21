@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HELENNE - Home – Helenne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500&family=Proza+Libre:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header site-header--overlay">
+    <div class="site-header__wrapper">
+
+      <!-- Menú principal -->
+      <nav class="site-header__nav" aria-label="Principal">
+        <button class="icon-btn menu-toggle" aria-label="Menú">
+          <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M2 5h16M2 10h16M2 15h16"/>
+          </svg>
+        </button>
+        <ul class="site-nav">
+          <li><a class="site-nav__link" href="tienda.html">Tienda</a></li>
+          <li><a class="site-nav__link" href="personalizar.html" data-es="Personalizar" data-en="Personalice">Personalizar</a></li>
+        </ul>
+      </nav>
+
+      <!-- Logo -->
+      <a class="site-header__logo" href="index.html">
+        <span class="site-header__logo-name">Helenne</span>
+        <span class="site-header__logo-tagline">handmade</span>
+      </a>
+
+      <!-- Idioma · Búsqueda · Carrito -->
+      <div class="site-header__icons">
+
+        <div class="lang-switcher" id="langSwitcher">
+          <button class="lang-switcher__toggle" aria-haspopup="listbox" aria-expanded="false">
+            <span data-lang-label>Español</span>
+            <svg viewBox="0 0 10 6" width="10" height="6" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M1 1l4 4 4-4"/>
+            </svg>
+          </button>
+          <div class="lang-switcher__list">
+            <a href="#" data-lang="Español">Español</a>
+            <a href="#" data-lang="English">English</a>
+          </div>
+        </div>
+
+        <a class="icon-btn" href="#" aria-label="Buscar">
+          <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3">
+            <circle cx="9" cy="9" r="6"/>
+            <path d="M13.5 13.5L18 18"/>
+          </svg>
+          <span class="visually-hidden">Buscar</span>
+        </a>
+
+        <a class="icon-btn" href="#" aria-label="Carrito">
+          <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3">
+            <path d="M3.5 6h13l-1 11.5h-11L3.5 6z"/>
+            <path d="M7 8V5a3 3 0 0 1 6 0v3"/>
+          </svg>
+          <span class="visually-hidden">Carrito</span>
+        </a>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Primera sección: vídeo a pantalla completa -->
+  <section class="hero">
+    <video class="hero__video" autoplay muted loop playsinline preload="auto"
+      poster="hero.jpg"
+      src="https://videos.pexels.com/video-files/6748729/6748729-uhd_3840_1600_24fps.mp4"
+      aria-label="Helenne — el mar en calma"></video>
+  </section>
+
+  <script src="site.js"></script>
+
+</body>
+</html>
