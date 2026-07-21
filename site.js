@@ -256,6 +256,58 @@
   const searchIcon = document.querySelector('.js-open-search');
   if (searchIcon) searchIcon.addEventListener('click', e => { e.preventDefault(); openSearch(); });
   panel.querySelector('.drawer-close').addEventListener('click', closeSearchPanel);
+
+  // ============ Menú móvil ============
+  const menu = document.createElement('aside');
+  menu.className = 'menu-drawer';
+  menu.setAttribute('aria-label', 'Menú');
+  menu.innerHTML =
+    '<div class="menu-drawer__head">' +
+    '  <h2 class="menu-drawer__title">Menú</h2>' +
+    '  <button class="drawer-close" type="button">Cerrar</button>' +
+    '</div>' +
+    '<nav class="menu-drawer__nav">' +
+    '  <a class="menu-drawer__link" href="tienda.html">Tienda</a>' +
+    '  <a class="menu-drawer__link" href="personalizar.html" data-es="Personalizar" data-en="Personalice">Personalizar</a>' +
+    '</nav>' +
+    '<div class="menu-drawer__langs">' +
+    '  <a href="#" data-lang="Español">Español</a>' +
+    '  <a href="#" data-lang="English">English</a>' +
+    '</div>';
+  document.body.appendChild(menu);
+
+  function openMenu() {
+    close(); closeSearchPanel();
+    menu.classList.add('is-open');
+    backdrop.classList.add('is-open');
+  }
+  function closeMenu() {
+    menu.classList.remove('is-open');
+    if (!drawer.classList.contains('is-open') && !panel.classList.contains('is-open')) {
+      backdrop.classList.remove('is-open');
+    }
+  }
+
+  const menuToggle = document.querySelector('.menu-toggle');
+  if (menuToggle) menuToggle.addEventListener('click', e => { e.preventDefault(); openMenu(); });
+  menu.querySelector('.drawer-close').addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+  // idioma también desde el menú móvil (el selector de cabecera está oculto en móvil)
+  menu.querySelectorAll('[data-lang]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      try { localStorage.setItem('helenne-lang', a.dataset.lang); } catch (err) {}
+      const code = a.dataset.lang === 'English' ? 'en' : 'es';
+      document.querySelectorAll('[data-es]').forEach(el => {
+        el.textContent = el.dataset[code] || el.dataset.es;
+      });
+      const label = document.querySelector('[data-lang-label]');
+      if (label) label.textContent = a.dataset.lang;
+      menu.querySelectorAll('[data-lang]').forEach(x => x.classList.toggle('is-current', x === a));
+    });
+  });
   input.addEventListener('input', () => renderResults(input.value));
   input.addEventListener('keydown', e => {
     if (e.key === 'Enter') {

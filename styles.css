@@ -628,6 +628,74 @@ img { max-width: 100%; display: block; }
 /* versión simple: círculo del color del texto con número invertido */
 .site-header--overlay .cart-count span { color: #3a3a3a; }
 
+/* ============ MENÚ MÓVIL (panel izquierdo) ============ */
+.menu-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  max-width: 85vw;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  transform: translateX(-100%);
+  transition: transform .4s ease;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-drawer.is-open { transform: translateX(0); }
+
+.menu-drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 30px 20px;
+  border-bottom: 1px solid rgba(36, 36, 36, .15);
+}
+
+.menu-drawer__title {
+  font-family: 'Proza Libre', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.menu-drawer__nav {
+  flex: 1;
+  padding: 20px 30px;
+}
+
+.menu-drawer__link {
+  display: block;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(36, 36, 36, .08);
+}
+
+.menu-drawer__link:hover { opacity: .6; }
+
+.menu-drawer__langs {
+  display: flex;
+  gap: 24px;
+  padding: 20px 30px 30px;
+  border-top: 1px solid rgba(36, 36, 36, .15);
+}
+
+.menu-drawer__langs a {
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .7;
+}
+
+.menu-drawer__langs a:hover,
+.menu-drawer__langs a.is-current { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
+
 /* ============ BUSCADOR (panel superior) ============ */
 .search-panel {
   position: fixed;
