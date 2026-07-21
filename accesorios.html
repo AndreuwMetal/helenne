@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <a class="icon-btn" href="#" aria-label="Buscar">
+        <a class="icon-btn js-open-search" href="#" aria-label="Buscar">
           <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3">
             <circle cx="9" cy="9" r="6"/>
             <path d="M13.5 13.5L18 18"/>
@@ -54,7 +54,7 @@
           <span class="visually-hidden">Buscar</span>
         </a>
 
-        <a class="icon-btn" href="#" aria-label="Carrito">
+        <a class="icon-btn js-open-cart" href="#" aria-label="Carrito">
           <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3">
             <path d="M3.5 6h13l-1 11.5h-11L3.5 6z"/>
             <path d="M7 8V5a3 3 0 0 1 6 0v3"/>
@@ -73,23 +73,33 @@
     <div class="collection-layout">
       <div class="product-grid">
 
-        <a class="product-card" href="#">
+        <div class="product-card">
           <div class="product-card__media">
             <img src="https://images.unsplash.com/photo-1606417465691-cd430ee3f624?w=900&h=900&q=80&auto=format&fit=crop" alt="Estuche Flora — estuche de tela con estampado floral">
             <img class="alt" src="https://images.unsplash.com/photo-1629804190724-ece12511fc74?w=900&h=900&q=80&auto=format&fit=crop" alt="Detalle de la tela floral del Estuche Flora" loading="lazy">
           </div>
           <span class="product-card__title">Estuche Flora</span>
           <span class="product-card__price">€24,00</span>
-        </a>
+          <button class="product-card__add js-add-cart" type="button"
+            data-id="estuche-flora" data-name="Estuche Flora" data-price="2400"
+            data-img="https://images.unsplash.com/photo-1606417465691-cd430ee3f624?w=200&h=200&q=70&auto=format&fit=crop">
+            Añadir al carrito
+          </button>
+        </div>
 
-        <a class="product-card" href="#">
+        <div class="product-card">
           <div class="product-card__media">
             <img src="https://images.unsplash.com/photo-1718692786594-6427da90c4d9?w=900&h=900&q=80&auto=format&fit=crop" alt="Estuche Alba — estuche de tela en tonos naturales">
             <img class="alt" src="https://images.unsplash.com/photo-1632227229919-6fb20d49eebe?w=900&h=900&q=80&auto=format&fit=crop" alt="Estuche Alba colgado en la pared" loading="lazy">
           </div>
           <span class="product-card__title">Estuche Alba</span>
           <span class="product-card__price">€28,00</span>
-        </a>
+          <button class="product-card__add js-add-cart" type="button"
+            data-id="estuche-alba" data-name="Estuche Alba" data-price="2800"
+            data-img="https://images.unsplash.com/photo-1718692786594-6427da90c4d9?w=200&h=200&q=70&auto=format&fit=crop">
+            Añadir al carrito
+          </button>
+        </div>
 
       </div>
     </div>
