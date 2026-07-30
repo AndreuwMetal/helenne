@@ -195,11 +195,11 @@
 
   // ============ Buscador ============
   const CATALOG = [
-    { name: 'Estuche Hestia', meta: 'Accesorios — €12,00', href: 'accesorios.html',
+    { name: 'Modelo Hestia', meta: 'Accesorios — €12,00', href: 'accesorios.html',
       img: 'productos/hestia-thumb.jpg' },
-    { name: 'Estuche Rose', meta: 'Accesorios — €12,00', href: 'accesorios.html',
+    { name: 'Modelo Rose', meta: 'Accesorios — €12,00', href: 'accesorios.html',
       img: 'productos/rose-thumb.jpg' },
-    { name: 'Neceser Hada', meta: 'Accesorios — €16,00', href: 'accesorios.html',
+    { name: 'Modelo Hada', meta: 'Accesorios — €16,00', href: 'accesorios.html',
       img: 'productos/hada-thumb.jpg' },
     { name: 'Accesorios', meta: 'Colección', href: 'accesorios.html' },
     { name: 'Ropa', meta: 'Colección — próximamente', href: 'ropa.html' },
