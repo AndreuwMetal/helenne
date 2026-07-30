@@ -195,8 +195,8 @@
 
   // ============ Buscador ============
   const CATALOG = [
-    { name: 'Estuche Gestia', meta: 'Accesorios — €12,00', href: 'accesorios.html',
-      img: 'productos/gestia-thumb.jpg' },
+    { name: 'Estuche Hestia', meta: 'Accesorios — €12,00', href: 'accesorios.html',
+      img: 'productos/hestia-thumb.jpg' },
     { name: 'Estuche Flora', meta: 'Accesorios — €24,00', href: 'accesorios.html',
       img: 'https://images.unsplash.com/photo-1606417465691-cd430ee3f624?w=200&h=200&q=70&auto=format&fit=crop' },
     { name: 'Estuche Alba', meta: 'Accesorios — €28,00', href: 'accesorios.html',
