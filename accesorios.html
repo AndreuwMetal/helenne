@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500&family=Proza+Libre:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
 
@@ -74,6 +74,26 @@
       <div class="product-grid">
 
         <div class="product-card">
+          <button class="product-card__media js-open-gallery" type="button"
+            aria-label="Ver todas las fotos del Estuche Gestia"
+            data-gallery="productos/gestia-1.jpg,productos/gestia-2.jpg,productos/gestia-3.jpg,productos/gestia-4.jpg,productos/gestia-5.jpg,productos/gestia-6.jpg,productos/gestia-7.jpg,productos/gestia-8.jpg,productos/gestia-9.jpg"
+            data-gallery-title="Estuche Gestia">
+            <img src="productos/gestia-1.jpg" alt="Estuche Gestia — estuche de tela de cuadros en tonos grises y azules">
+            <img class="alt" src="productos/gestia-2.jpg" alt="Estuche Gestia sostenido con las dos manos" loading="lazy">
+            <span class="product-card__zoom">Ver 9 fotos</span>
+          </button>
+          <span class="product-card__title">Estuche Gestia</span>
+          <span class="product-card__price">€12,00
+            <span class="product-card__note" data-es="· envío incluido" data-en="· free shipping">· envío incluido</span>
+          </span>
+          <button class="product-card__add js-add-cart" type="button"
+            data-id="estuche-gestia" data-name="Estuche Gestia" data-price="1200"
+            data-img="productos/gestia-thumb.jpg">
+            Añadir al carrito
+          </button>
+        </div>
+
+        <div class="product-card">
           <div class="product-card__media">
             <img src="https://images.unsplash.com/photo-1606417465691-cd430ee3f624?w=900&h=900&q=80&auto=format&fit=crop" alt="Estuche Flora — estuche de tela con estampado floral">
             <img class="alt" src="https://images.unsplash.com/photo-1629804190724-ece12511fc74?w=900&h=900&q=80&auto=format&fit=crop" alt="Detalle de la tela floral del Estuche Flora" loading="lazy">
@@ -105,7 +125,7 @@
     </div>
   </main>
 
-  <script src="site.js?v=3"></script>
+  <script src="site.js?v=4"></script>
 
 </body>
 </html>

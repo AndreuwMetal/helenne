@@ -195,6 +195,8 @@
 
   // ============ Buscador ============
   const CATALOG = [
+    { name: 'Estuche Gestia', meta: 'Accesorios — €12,00', href: 'accesorios.html',
+      img: 'productos/gestia-thumb.jpg' },
     { name: 'Estuche Flora', meta: 'Accesorios — €24,00', href: 'accesorios.html',
       img: 'https://images.unsplash.com/photo-1606417465691-cd430ee3f624?w=200&h=200&q=70&auto=format&fit=crop' },
     { name: 'Estuche Alba', meta: 'Accesorios — €28,00', href: 'accesorios.html',
@@ -316,4 +318,98 @@
     }
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearchPanel(); });
+})();
+
+// ============ Galería de fotos del producto ============
+(function () {
+  const triggers = document.querySelectorAll('.js-open-gallery');
+  if (!triggers.length) return;
+
+  const box = document.createElement('div');
+  box.className = 'gallery-lightbox';
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-modal', 'true');
+  box.innerHTML =
+    '<div class="gallery-lightbox__head">' +
+    '  <h2 class="gallery-lightbox__title"></h2>' +
+    '  <span class="gallery-lightbox__count"></span>' +
+    '  <button class="drawer-close" type="button">Cerrar</button>' +
+    '</div>' +
+    '<div class="gallery-lightbox__stage">' +
+    '  <button class="gallery-nav gallery-nav--prev" type="button" aria-label="Foto anterior">‹</button>' +
+    '  <img alt="">' +
+    '  <button class="gallery-nav gallery-nav--next" type="button" aria-label="Foto siguiente">›</button>' +
+    '</div>' +
+    '<div class="gallery-lightbox__thumbs"></div>';
+  document.body.appendChild(box);
+
+  const titleEl = box.querySelector('.gallery-lightbox__title');
+  const countEl = box.querySelector('.gallery-lightbox__count');
+  const stageImg = box.querySelector('.gallery-lightbox__stage img');
+  const thumbsBox = box.querySelector('.gallery-lightbox__thumbs');
+
+  let photos = [];
+  let title = '';
+  let index = 0;
+  let lastTrigger = null;
+
+  function show(i) {
+    if (!photos.length) return;
+    index = (i + photos.length) % photos.length;
+    stageImg.src = photos[index];
+    stageImg.alt = title + ' — foto ' + (index + 1) + ' de ' + photos.length;
+    countEl.textContent = (index + 1) + ' / ' + photos.length;
+    thumbsBox.querySelectorAll('button').forEach((b, n) => {
+      b.classList.toggle('is-current', n === index);
+    });
+  }
+
+  function open(trigger) {
+    photos = (trigger.dataset.gallery || '').split(',').map(s => s.trim()).filter(Boolean);
+    title = trigger.dataset.galleryTitle || '';
+    if (!photos.length) return;
+    lastTrigger = trigger;
+    titleEl.textContent = title;
+    thumbsBox.innerHTML = photos.map((src, n) =>
+      '<button type="button" data-go="' + n + '" aria-label="Foto ' + (n + 1) + '">' +
+      '<img src="' + src + '" alt="" loading="lazy"></button>'
+    ).join('');
+    box.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    show(0);
+    box.querySelector('.drawer-close').focus();
+  }
+
+  function close() {
+    box.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (lastTrigger) lastTrigger.focus();
+  }
+
+  triggers.forEach(t => t.addEventListener('click', () => open(t)));
+  box.querySelector('.drawer-close').addEventListener('click', close);
+  box.querySelector('.gallery-nav--prev').addEventListener('click', () => show(index - 1));
+  box.querySelector('.gallery-nav--next').addEventListener('click', () => show(index + 1));
+
+  thumbsBox.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (b) show(+b.dataset.go);
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!box.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(index - 1);
+    if (e.key === 'ArrowRight') show(index + 1);
+  });
+
+  // deslizar con el dedo en móvil
+  let startX = null;
+  box.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  box.addEventListener('touchend', e => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+    startX = null;
+  }, { passive: true });
 })();
