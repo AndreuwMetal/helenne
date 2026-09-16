@@ -1,0 +1,33 @@
+/* Paleta sacada de las telas: papel frío, tinta índigo (las rayas del Azul) y
+   un escenario de estudio por pieza (ver `tint` en services/catalog.ts). */
+:root {
+  --paper: #f1f2ef;
+  --paper-raised: #f8f8f6;
+  --ink: #1f2a44;
+  --ink-soft: #5a6275;
+  --line: #d8dbe1;
+  --stage: #e6e9ee;
+  --seam: rgb(31 42 68 / 0.22);
+  --focus: #3b5bdb;
+
+  --font-display: 'Petrona', Georgia, serif;
+  --font-body: 'Proza Libre', system-ui, sans-serif;
+
+  /* escala tipográfica (razón 1,25) */
+  --text-sm: 0.8125rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5625rem;
+  --text-2xl: 1.953rem;
+  --text-3xl: clamp(2.2rem, 1.6rem + 2.6vw, 3.815rem);
+
+  --radius-stage: 20px;
+  --radius-control: 999px;
+  --radius-field: 8px;
+
+  --gutter: clamp(20px, 4vw, 56px);
+  --content: 1240px;
+  --header-h: 76px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}

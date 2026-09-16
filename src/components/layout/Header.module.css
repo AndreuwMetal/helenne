@@ -1,0 +1,144 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgb(241 242 239 / 0.86);
+  backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s var(--ease);
+}
+
+.scrolled {
+  border-bottom-color: var(--line);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: var(--header-h);
+  width: min(100% - 2 * var(--gutter), var(--content));
+  margin-inline: auto;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+}
+
+.link {
+  position: relative;
+  padding: 6px 0;
+  font-size: var(--text-sm);
+  text-decoration: none;
+  color: var(--ink-soft);
+  transition: color 0.2s var(--ease);
+}
+
+.link:hover,
+.active {
+  color: var(--ink);
+}
+
+.active::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  border-bottom: 1px dashed currentColor;
+}
+
+.logo {
+  display: grid;
+  justify-items: center;
+  text-decoration: none;
+  line-height: 1;
+}
+
+/* el logotipo conserva su tipografía y tracking originales */
+.logoName {
+  font-family: var(--font-body);
+  font-size: 1.375rem;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  text-transform: uppercase;
+}
+
+.logoTag {
+  margin-top: 6px;
+  font-size: 0.5rem;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.lang {
+  margin-right: 10px;
+}
+
+.icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+}
+
+.icon:hover {
+  background: rgb(31 42 68 / 0.06);
+}
+
+.badge {
+  position: absolute;
+  top: 5px;
+  right: 3px;
+  display: grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.menuButton {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .inner {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .nav,
+  .lang {
+    display: none;
+  }
+
+  .menuButton {
+    display: grid;
+    margin-left: -10px;
+  }
+
+  .logo {
+    justify-items: start;
+    padding-left: 6px;
+  }
+
+  .logoName {
+    font-size: 1.125rem;
+  }
+}

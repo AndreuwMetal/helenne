@@ -1,0 +1,15 @@
+# dependencias y compilación
+node_modules
+dist
+*.local
+*.log
+
+# vídeos originales (pesados; las secuencias generadas están en public/frames)
+videos/
+
+# sistema y editores
+.DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json
+.playwright-mcp

@@ -1,0 +1,11 @@
+{
+  "fps": 15,
+  "width": 960,
+  "height": 600,
+  "products": {
+    "azul":   { "video": "videos/IMG_6030.MOV", "segments": [[0.3, 2.3]] },
+    "hestia": { "video": "videos/IMG_6031.MOV", "segments": [[0.0, 3.3]] },
+    "rose":   { "video": "videos/IMG_6034.MOV", "segments": [[20.1, 24.5]] },
+    "hada":   { "video": "videos/IMG_6033.mov", "segments": [[0.0, 0.95]] }
+  }
+}

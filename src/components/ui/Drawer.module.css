@@ -1,0 +1,111 @@
+.drawer {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  max-width: none;
+  max-height: none;
+  background: transparent;
+  color: var(--ink);
+  overflow: visible;
+}
+
+.drawer::backdrop {
+  background: rgb(31 42 68 / 0.28);
+  backdrop-filter: blur(2px);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--paper-raised);
+  box-shadow: 0 0 60px rgb(31 42 68 / 0.18);
+}
+
+.right,
+.left {
+  height: 100dvh;
+  width: min(420px, 92vw);
+  inset-block: 0;
+}
+
+.right {
+  inset-inline: auto 0;
+}
+
+.left {
+  inset-inline: 0 auto;
+}
+
+.top {
+  width: 100vw;
+  inset: 0 0 auto;
+}
+
+.top .panel {
+  height: auto;
+  max-height: 80dvh;
+}
+
+/* entrada suave */
+.drawer[open] .panel {
+  animation: slide-in 0.35s var(--ease);
+}
+
+.right[open] .panel {
+  --from: translateX(24px);
+}
+
+.left[open] .panel {
+  --from: translateX(-24px);
+}
+
+.top[open] .panel {
+  --from: translateY(-16px);
+}
+
+@keyframes slide-in {
+  from {
+    transform: var(--from);
+    opacity: 0;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 28px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.title {
+  font-size: var(--text-xl);
+}
+
+.close {
+  margin-left: auto;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.close:hover {
+  color: var(--ink);
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 28px;
+}
+
+.foot {
+  padding: 20px 28px 28px;
+  border-top: 1px solid var(--line);
+}

@@ -1,0 +1,22 @@
+.switch {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+}
+
+.option {
+  min-width: 36px;
+  height: 28px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: none;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.option[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}

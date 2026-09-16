@@ -1,0 +1,47 @@
+.card {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.info {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.name {
+  font-size: var(--text-2xl);
+}
+
+.kind {
+  margin-top: 2px;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.price {
+  font-size: var(--text-lg);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.shipping {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.description {
+  max-width: 48ch;
+  color: var(--ink-soft);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+}

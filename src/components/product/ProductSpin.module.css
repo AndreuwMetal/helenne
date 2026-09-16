@@ -1,0 +1,73 @@
+.wrap {
+  display: grid;
+  gap: 12px;
+}
+
+/* Escenario de estudio: fondo del color de la pieza con un foco de luz
+   y un pespunte discontinuo, la firma visual de la web. */
+.stage {
+  --tint: var(--stage);
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--radius-stage);
+  background:
+    radial-gradient(120% 90% at 50% 38%, rgb(255 255 255 / 0.75), transparent 62%),
+    linear-gradient(180deg, var(--tint) 0%, color-mix(in srgb, var(--tint) 88%, #1f2a44) 100%);
+  isolation: isolate;
+}
+
+.stage::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1.5px dashed var(--seam);
+  border-radius: calc(var(--radius-stage) - 8px);
+  pointer-events: none;
+}
+
+.large {
+  aspect-ratio: 16 / 11;
+}
+
+.interactive {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.interactive:active {
+  cursor: grabbing;
+}
+
+.poster,
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.poster {
+  z-index: -1;
+}
+
+/* el canvas tapa el póster en cuanto pinta */
+.canvas {
+  background: transparent;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.hint::before {
+  content: '';
+  width: 26px;
+  border-top: 1.5px dashed currentColor;
+}

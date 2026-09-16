@@ -1,0 +1,16 @@
+.header {
+  padding-block: clamp(40px, 7vw, 88px) clamp(28px, 4vw, 48px);
+}
+
+.title {
+  font-size: var(--text-3xl);
+}
+
+.lead {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+  max-width: 58ch;
+  font-size: var(--text-lg);
+  color: var(--ink-soft);
+}
