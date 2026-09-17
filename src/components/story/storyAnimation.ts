@@ -1,6 +1,4 @@
 import { at, clamp, ease, panelOpacity, rgb, within, type Keys } from '../../services/timeline'
-import type { FrameSequence } from '../product/frameSequence'
-
 /** Lo que la escena necesita de la pieza protagonista (modelo 3D). */
 export interface PieceView {
   update: (turn: number, tilt: number, explode: number) => void
@@ -101,7 +99,7 @@ const FACT_STARTS = [0.46, 0.475, 0.49, 0.505]
 
 interface Card {
   canvas: HTMLCanvasElement
-  seq: FrameSequence
+  view: PieceView
 }
 
 /**
@@ -208,9 +206,8 @@ export function createStoryAnimation(root: HTMLElement, piece: PieceView, cards:
     for (const c of cards) {
       const r2 = c.canvas.getBoundingClientRect()
       if (r2.right < -200 || r2.left > innerWidth + 200) continue
-      c.seq.load()
       const center = (r2.left + r2.width / 2) / innerWidth // 1 a la derecha, 0 a la izquierda
-      c.seq.draw(clamp(1.1 - center) * c.seq.last)
+      c.view.update(-0.3 + (0.6 - center) * Math.PI, 0.08, 0)
     }
   }
 

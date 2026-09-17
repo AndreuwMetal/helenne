@@ -33,8 +33,8 @@ src/
     layout/           cabecera, pie, menú móvil, buscador, idioma
     story/            portada narrada: escena fija y coreografía del scroll
                       (storyAnimation.ts, claves en services/timeline.ts)
-    three/            modelo 3D del Modelo Azul (three.js): forma, telas y despiece
-    product/          secuencias de fotogramas, pieza que gira, tarjeta y galería
+    three/            modelos 3D (three.js): fichas, forma, telas, despiece y escena
+    product/          modelo 3D interactivo, tarjeta y galería
     cart/             panel del carrito
     providers/        estado global: idioma y carrito (contexto + hook)
     ui/               piezas genéricas: botones y panel lateral
@@ -49,10 +49,9 @@ src/
     storage.ts        localStorage seguro
   styles/             variables de diseño y estilos base
 public/
-  frames/<modelo>/    secuencias de giro (generadas, ver abajo)
+  textures/           fotos de las telas para los modelos 3D
   img/products/       fotos de cada modelo
   CNAME               dominio de GitHub Pages
-tools/frames/         generador de las secuencias de giro
 ```
 
 Cada componente lleva su hoja de estilos al lado (`*.module.css`).
@@ -60,35 +59,30 @@ Cada componente lleva su hoja de estilos al lado (`*.module.css`).
 ## Añadir o cambiar un producto
 
 1. Edita `src/services/catalog.ts`: nombre, precio en céntimos (`null` si aún
-   no se vende), fotos y número de fotogramas.
+   no se vende) y fotos.
 2. Copia las fotos a `public/img/products/<modelo>/` (`1.jpg`, `2.jpg`… y `thumb.jpg`).
-3. Genera su secuencia de giro (siguiente apartado).
+3. Añade su ficha 3D en `src/components/three/specs.ts` y una imagen fija
+   `modelo.png` (ver «Modelos 3D»).
 
 La portada, la tienda, el buscador y el carrito leen del catálogo: no hay que
 tocar nada más.
 
-## Secuencias de giro
+## Modelos 3D
 
-Las piezas que giran son fotogramas recortados de los vídeos de producto.
-El recorte usa Vision de macOS, así que el generador solo funciona en un Mac
-(macOS 14 o superior) con `ffmpeg`, `jq` y `uv`.
+Las piezas son modelos 3D construidos en código con three.js
+(`src/components/three/`), no escaneados:
 
-1. Deja los vídeos en `videos/` (no se suben al repositorio).
-2. En `tools/frames/products.json`, indica para cada modelo el vídeo y los
-   tramos **sin manos** en segundos.
-3. Ejecuta `npm run frames` (o `npm run frames -- hada` para uno solo).
-4. Actualiza `frames` en el catálogo con el número de archivos generados.
+- `specs.ts`: ficha de cada modelo (medidas en cm, forma, tela, forro y
+  cremallera). Las medidas están estimadas a partir de los vídeos; con las
+  reales basta con cambiar los números.
+- `pieceModel.ts`: construye la pieza (neceser o estuche) con sus capas
+  separadas (tela, guata, forro), por eso se puede despiezar.
+- `fabricTextures.ts`: telas generadas en código (rayas, cuadro) o fotos de la
+  tela real (`public/textures/`).
+- `modelView.ts`: escena de estudio (luz, sombra, cámara).
 
-Para un giro completo de 360°, graba la pieza sola en un plato giratorio,
-con fondo liso y buena luz: el recorte sale mucho más limpio.
-
-## Modelo 3D
-
-El Modelo Azul de la portada es un modelo 3D construido en código
-(`src/components/three/`), no escaneado: forma, rayas y acolchado salen de
-medidas estimadas en los vídeos (`azulSpec` en `pouchView.ts`). Con las medidas
-reales de la pieza basta con cambiar esos números. Las capas (tela, guata y
-forro) son piezas separadas, por eso se puede despiezar.
+Las imágenes fijas `public/img/products/<modelo>/modelo.png` se ven mientras
+carga el 3D y como miniatura del Modelo Azul.
 
 ## Publicación
 

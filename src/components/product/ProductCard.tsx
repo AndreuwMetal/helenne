@@ -6,7 +6,7 @@ import { Button, ButtonExternal } from '../ui/Button'
 import { useCart } from '../providers/cartContext'
 import { useLanguage } from '../providers/languageContext'
 import ProductGallery from './ProductGallery'
-import ProductSpin from './ProductSpin'
+import ProductModel from './ProductModel'
 import styles from './ProductCard.module.css'
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -17,7 +17,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className={styles.card} id={product.slug}>
-      <ProductSpin product={product} />
+      <ProductModel product={product} />
       <p className={`label ${styles.kind}`}>{pick(product.kind)}</p>
       <h3 className={styles.name}>{product.name}</h3>
       <p className={`label ${styles.tags}`}>{pick(product.tags)}</p>

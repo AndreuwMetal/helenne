@@ -22,12 +22,11 @@ export interface Product {
   tags: Localized
   /** Precio en céntimos. `null` = todavía no se vende. */
   price: number | null
-  /** Color del escenario donde gira la pieza. */
-  tint: string
-  /** Nº de fotogramas en public/frames/<slug>/. */
-  frames: number
   photos: string[]
+  /** Miniatura (carrito y buscador). */
   thumb: string
+  /** Imagen fija del modelo 3D, visible mientras carga. */
+  still: string
 }
 
 const photos = (slug: string, n: number) =>
@@ -87,10 +86,9 @@ export const products: Product[] = [
       en: 'Grey and blue check fabric with a metal zip.',
     },
     price: 1200,
-    tint: '#E6E5E1',
-    frames: 50,
     photos: photos('hestia', 9),
     thumb: '/img/products/hestia/thumb.jpg',
+    still: '/img/products/hestia/modelo.png',
   },
   {
     id: 'modelo-rose',
@@ -104,10 +102,9 @@ export const products: Product[] = [
       en: 'Burgundy lace with a metal zip.',
     },
     price: 1200,
-    tint: '#EFE3E3',
-    frames: 66,
     photos: photos('rose', 3),
     thumb: '/img/products/rose/thumb.jpg',
+    still: '/img/products/rose/modelo.png',
   },
   {
     id: 'modelo-hada',
@@ -121,10 +118,9 @@ export const products: Product[] = [
       en: 'Quilted printed fabric in raspberry and grey.',
     },
     price: 1600,
-    tint: '#F0E6E4',
-    frames: 15,
     photos: photos('hada', 5),
     thumb: '/img/products/hada/thumb.jpg',
+    still: '/img/products/hada/modelo.png',
   },
   {
     id: 'modelo-azul',
@@ -138,10 +134,9 @@ export const products: Product[] = [
       en: 'Quilted fine blue-and-white stripes with a white zip.',
     },
     price: null,
-    tint: '#E3E8F0',
-    frames: 30,
     photos: [],
-    thumb: '/frames/azul/000.webp',
+    thumb: '/img/products/azul/modelo.png',
+    still: '/img/products/azul/modelo.png',
   },
 ]
 
@@ -182,6 +177,3 @@ export const findProductBySlug = (slug: string) => products.find((p) => p.slug =
 export const findCollection = (slug: string) => collections.find((c) => c.slug === slug)
 export const productsIn = (slug: CollectionSlug) => products.filter((p) => p.collection === slug)
 
-/** Ruta de un fotograma de la secuencia de giro. */
-export const frameUrl = (slug: string, index: number) =>
-  `/frames/${slug}/${String(index).padStart(3, '0')}.webp`

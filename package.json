@@ -11,8 +11,7 @@
     "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
     "preview": "vite preview",
     "lint": "oxlint",
-    "test": "vitest run",
-    "frames": "tools/frames/build.sh"
+    "test": "vitest run"
   },
   "dependencies": {
     "react": "^19.3.0",

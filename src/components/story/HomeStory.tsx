@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router'
-import { azulFacts, azulNotes, findProductBySlug, frameUrl, productsIn } from '../../services/catalog'
+import { azulFacts, azulNotes, findProductBySlug, productsIn } from '../../services/catalog'
 import { formatPrice } from '../../services/format'
 import { reserveMessage, whatsappUrl } from '../../services/whatsapp'
 import { useCart } from '../providers/cartContext'
 import { useLanguage } from '../providers/languageContext'
-import { FRAME_HEIGHT, FRAME_WIDTH, FrameSequence } from '../product/frameSequence'
 import { createStoryAnimation, RANGES } from './storyAnimation'
 import styles from './HomeStory.module.css'
 
@@ -28,37 +27,29 @@ export default function HomeStory() {
   useEffect(() => {
     const root = rootRef.current
     if (!root) return
-    // cada canvas oculta su imagen de reserva en cuanto pinta
-    const sequence = (canvas: HTMLCanvasElement, slug: string, frames: number) =>
-      new FrameSequence(canvas, slug, frames, () => {
-        const poster = canvas.previousElementSibling as HTMLElement | null
-        if (poster) poster.style.visibility = 'hidden'
-      })
-    const cards = [...root.querySelectorAll<HTMLCanvasElement>('[data-card-canvas]')]
-      .filter((canvas) => canvas.dataset.slug !== azul.slug)
-      .map((canvas) => {
-        const p = collection.find((x) => x.slug === canvas.dataset.slug)!
-        return { canvas, seq: sequence(canvas, p.slug, p.frames) }
-      })
-
-    // el modelo 3D (three.js) se descarga aparte para no frenar la primera carga
+    // los modelos 3D (three.js) se descargan aparte para no frenar la primera carga
     let cleanup: (() => void) | undefined
     let cancelled = false
-    import('../three/pouchView').then(({ azulSpec, createPouchView }) => {
+    import('../three/modelView').then(({ createModelView }) => {
       if (cancelled) return
-      const canvas = root.querySelector<HTMLCanvasElement>('[data-piece] canvas')!
-      const view = createPouchView(canvas, azulSpec())
-      // la tarjeta del Azul en el carrusel muestra el mismo modelo
-      const card = root.querySelector<HTMLImageElement>('[data-card-piece] img[data-slug="azul"]')
-      if (card) card.src = view.snapshot(-0.3)
-      ;(canvas.previousElementSibling as HTMLElement).style.visibility = 'hidden'
-      const stop = createStoryAnimation(root, view, cards)
-      const onResize = () => view.resize()
+      const open = (canvas: HTMLCanvasElement, slug: string) => {
+        const view = createModelView(canvas, slug)
+        ;(canvas.previousElementSibling as HTMLElement).style.visibility = 'hidden'
+        return view
+      }
+      const main = open(root.querySelector<HTMLCanvasElement>('[data-piece] canvas')!, azul.slug)
+      const cards = [...root.querySelectorAll<HTMLCanvasElement>('[data-card-canvas]')].map((canvas) => ({
+        canvas,
+        view: open(canvas, canvas.dataset.slug!),
+      }))
+      const views = [main, ...cards.map((c) => c.view)]
+      const stop = createStoryAnimation(root, main, cards)
+      const onResize = () => views.forEach((v) => v.resize())
       addEventListener('resize', onResize)
       cleanup = () => {
         stop()
         removeEventListener('resize', onResize)
-        view.dispose()
+        views.forEach((v) => v.dispose())
       }
     })
     return () => {
@@ -94,7 +85,7 @@ export default function HomeStory() {
 
         {/* la pieza protagonista */}
         <div className={styles.piece} data-piece role="img" aria-label={`${azul.name}, ${pick(azul.description)}`}>
-          <img src={frameUrl(azul.slug, 0)} alt="" />
+          <img src={azul.still} alt="" />
           <canvas />
         </div>
 
@@ -155,10 +146,8 @@ export default function HomeStory() {
             {collection.map((p, i) => (
               <article key={p.id} className={styles.card} data-card={i}>
                 <div className={styles.cardPiece} data-card-piece>
-                  <img src={frameUrl(p.slug, 0)} alt="" loading="lazy" data-slug={p.slug} />
-                  {p.slug !== azul.slug && (
-                    <canvas data-card-canvas data-slug={p.slug} width={FRAME_WIDTH} height={FRAME_HEIGHT} />
-                  )}
+                  <img src={p.still} alt="" loading="lazy" />
+                  <canvas data-card-canvas data-slug={p.slug} />
                 </div>
                 <p className={`label ${styles.cardKind}`}>{pick(p.kind)}</p>
                 <h3 className={styles.cardName}>{p.name}</h3>

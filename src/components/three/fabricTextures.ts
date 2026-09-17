@@ -92,6 +92,69 @@ export function quiltBump() {
   return toTexture(c, false)
 }
 
+/**
+ * Cuadro príncipe de Gales: zonas de pata de gallo alternas con rayas finas
+ * y un sobrecuadro azul y rojo, como el del Modelo Hestia.
+ */
+export function glenCheckTexture() {
+  const c = canvas((ctx) => {
+    const light = '#cfccc5'
+    const dark = '#34343a'
+    ctx.fillStyle = light
+    ctx.fillRect(0, 0, SIZE, SIZE)
+    const block = SIZE / 2
+    const unit = 16 // 4 unidades = un diente de la pata de gallo
+    for (let by = 0; by < 2; by++) {
+      for (let bx = 0; bx < 2; bx++) {
+        const x0 = bx * block
+        const y0 = by * block
+        ctx.fillStyle = dark
+        if ((bx + by) % 2 === 0) {
+          // pata de gallo: patrón clásico de 8 × 8 hilos
+          const tooth = [
+            '11110000', '11110000', '11110000', '11110000',
+            '00001111', '10001110', '11001100', '11101000',
+          ]
+          for (let y = 0; y < block; y += unit / 2) {
+            for (let x = 0; x < block; x += unit / 2) {
+              const row = tooth[(y / (unit / 2)) % 8]
+              if (row[(x / (unit / 2)) % 8] === '1') ctx.fillRect(x0 + x, y0 + y, unit / 2, unit / 2)
+            }
+          }
+        } else {
+          // rayas finas cruzadas (2 hilos oscuros, 2 claros)
+          for (let t = 0; t < block; t += unit) {
+            ctx.globalAlpha = 0.75
+            ctx.fillRect(x0 + t, y0, unit / 2, block)
+            ctx.globalAlpha = 0.45
+            ctx.fillRect(x0, y0 + t, block, unit / 2)
+            ctx.globalAlpha = 1
+          }
+        }
+      }
+    }
+    // sobrecuadro
+    const line = (color: string, pos: number, width: number) => {
+      ctx.fillStyle = color
+      ctx.fillRect(pos, 0, width, SIZE)
+      ctx.fillRect(0, pos, SIZE, width)
+    }
+    line('rgba(52, 78, 128, 0.85)', block - 6, 6)
+    line('rgba(150, 52, 44, 0.6)', block + 40, 4)
+    weave(ctx, 1)
+  })
+  return toTexture(c, true)
+}
+
+/** Foto de la tela real, repetida en espejo para que no se noten los cortes. */
+export function photoTexture(url: string, onLoad: () => void) {
+  const t = new THREE.TextureLoader().load(url, onLoad)
+  t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping
+  t.anisotropy = 8
+  t.colorSpace = THREE.SRGBColorSpace
+  return t
+}
+
 function toTexture(c: HTMLCanvasElement, color: boolean) {
   const t = new THREE.CanvasTexture(c)
   t.wrapS = t.wrapT = THREE.RepeatWrapping
