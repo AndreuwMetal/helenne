@@ -1,6 +1,11 @@
 import { at, clamp, ease, panelOpacity, rgb, within, type Keys } from '../../services/timeline'
 import type { FrameSequence } from '../product/frameSequence'
 
+/** Lo que la escena necesita de la pieza protagonista (modelo 3D). */
+export interface PieceView {
+  update: (turn: number, tilt: number, explode: number) => void
+}
+
 /** Tramo del scroll (0–1) en el que se ve cada sección. */
 export const RANGES = {
   hero: [0, 0.07],
@@ -26,16 +31,37 @@ const background: Keys<readonly number[]> = [
   [1, DARK],
 ]
 
-/** Fotograma de la pieza (se multiplica por el último índice). */
-const frame: Keys<number> = [
+const TAU = Math.PI * 2
+
+/** Giro del modelo (radianes): tres cuartos, despiece, espalda, vuelta completa. */
+const turn: Keys<number> = [
+  [0, -0.3],
+  [0.06, -0.3],
+  [0.19, 0.95],
+  [0.34, 1.15],
+  [0.41, 2.2],
+  [0.57, 3.6],
+  [0.66, TAU - 0.3],
+  [0.88, TAU - 0.3],
+  [1, TAU - 0.3],
+]
+
+/** Despiece de capas: se abre en «La pieza» y se vuelve a cerrar. */
+const explode: Keys<number> = [
   [0, 0],
-  [0.06, 0],
-  [0.37, 0.55],
-  [0.57, 1],
-  [0.64, 0.2],
-  [0.88, 0.2],
-  [0.9, 0],
+  [0.16, 0],
+  [0.21, 1],
+  [0.33, 1],
+  [0.39, 0],
   [1, 0],
+]
+
+const tilt: Keys<number> = [
+  [0, 0.04],
+  [0.19, 0.14],
+  [0.34, 0.14],
+  [0.41, 0.04],
+  [1, 0.04],
 ]
 
 /** Pieza: [x vw, y vh, escala, giro en grados, opacidad]. */
@@ -44,8 +70,8 @@ type Pose = readonly [number, number, number, number, number]
 const desktop: Keys<Pose> = [
   [0, [2, 12, 0.78, 0, 1]],
   [0.06, [2, 12, 0.78, 0, 1]],
-  [0.16, [0, 5, 0.6, -2, 1]],
-  [0.37, [0, 5, 0.6, 2, 1]],
+  [0.16, [0, 9, 1, 0, 1]],
+  [0.37, [0, 9, 1, 0, 1]],
   [0.44, [19, 3, 0.72, -3, 1]],
   [0.57, [19, 3, 0.72, 3, 1]],
   [0.62, [4, 14, 0.5, -6, 1]],
@@ -58,8 +84,8 @@ const desktop: Keys<Pose> = [
 const mobile: Keys<Pose> = [
   [0, [0, 16, 1.05, 0, 1]],
   [0.06, [0, 16, 1.05, 0, 1]],
-  [0.16, [0, 3, 0.62, -2, 1]],
-  [0.37, [0, 3, 0.62, 2, 1]],
+  [0.16, [0, 3, 0.95, 0, 1]],
+  [0.37, [0, 3, 0.95, 0, 1]],
   [0.44, [0, 30, 0.55, -3, 1]],
   [0.57, [0, 30, 0.55, 3, 1]],
   [0.62, [0, 20, 0.5, -6, 1]],
@@ -82,7 +108,7 @@ interface Card {
  * Engancha la animación al scroll. Devuelve la función de limpieza.
  * Todo se escribe directamente en estilos para no re-renderizar React.
  */
-export function createStoryAnimation(root: HTMLElement, piece: FrameSequence, cards: Card[]) {
+export function createStoryAnimation(root: HTMLElement, piece: PieceView, cards: Card[]) {
   const q = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!
   const qa = <T extends HTMLElement>(sel: string) => [...root.querySelectorAll<T>(sel)]
 
@@ -146,7 +172,7 @@ export function createStoryAnimation(root: HTMLElement, piece: FrameSequence, ca
     pieceEl.style.transform = `translate3d(calc(-50% + ${x * vw}px), calc(-50% + ${y * vh}px), 0) scale(${s}) rotate(${r}deg)`
     pieceEl.style.opacity = String(o)
     firstCard.style.opacity = p > HANDOFF[1] && p < 0.9 ? '1' : '0'
-    piece.draw(at(frame, p) * piece.last)
+    piece.update(at(turn, p), at(tilt, p), at(explode, p))
 
     // palabra gigante de fondo
     const w = within(p, 0.03, 0.12)

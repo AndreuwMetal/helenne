@@ -34,13 +34,37 @@ export default function HomeStory() {
         const poster = canvas.previousElementSibling as HTMLElement | null
         if (poster) poster.style.visibility = 'hidden'
       })
-    const piece = sequence(root.querySelector<HTMLCanvasElement>('[data-piece] canvas')!, azul.slug, azul.frames)
-    piece.load()
-    const cards = [...root.querySelectorAll<HTMLCanvasElement>('[data-card-canvas]')].map((canvas) => {
-      const p = collection.find((x) => x.slug === canvas.dataset.slug)!
-      return { canvas, seq: sequence(canvas, p.slug, p.frames) }
+    const cards = [...root.querySelectorAll<HTMLCanvasElement>('[data-card-canvas]')]
+      .filter((canvas) => canvas.dataset.slug !== azul.slug)
+      .map((canvas) => {
+        const p = collection.find((x) => x.slug === canvas.dataset.slug)!
+        return { canvas, seq: sequence(canvas, p.slug, p.frames) }
+      })
+
+    // el modelo 3D (three.js) se descarga aparte para no frenar la primera carga
+    let cleanup: (() => void) | undefined
+    let cancelled = false
+    import('../three/pouchView').then(({ azulSpec, createPouchView }) => {
+      if (cancelled) return
+      const canvas = root.querySelector<HTMLCanvasElement>('[data-piece] canvas')!
+      const view = createPouchView(canvas, azulSpec())
+      // la tarjeta del Azul en el carrusel muestra el mismo modelo
+      const card = root.querySelector<HTMLImageElement>('[data-card-piece] img[data-slug="azul"]')
+      if (card) card.src = view.snapshot(-0.3)
+      ;(canvas.previousElementSibling as HTMLElement).style.visibility = 'hidden'
+      const stop = createStoryAnimation(root, view, cards)
+      const onResize = () => view.resize()
+      addEventListener('resize', onResize)
+      cleanup = () => {
+        stop()
+        removeEventListener('resize', onResize)
+        view.dispose()
+      }
     })
-    return createStoryAnimation(root, piece, cards)
+    return () => {
+      cancelled = true
+      cleanup?.()
+    }
   }, [])
 
   const onReserve = (e: FormEvent<HTMLFormElement>) => {
@@ -71,7 +95,7 @@ export default function HomeStory() {
         {/* la pieza protagonista */}
         <div className={styles.piece} data-piece role="img" aria-label={`${azul.name}, ${pick(azul.description)}`}>
           <img src={frameUrl(azul.slug, 0)} alt="" />
-          <canvas width={FRAME_WIDTH} height={FRAME_HEIGHT} />
+          <canvas />
         </div>
 
         {/* 1 · portada */}
@@ -131,8 +155,10 @@ export default function HomeStory() {
             {collection.map((p, i) => (
               <article key={p.id} className={styles.card} data-card={i}>
                 <div className={styles.cardPiece} data-card-piece>
-                  <img src={frameUrl(p.slug, 0)} alt="" loading="lazy" />
-                  <canvas data-card-canvas data-slug={p.slug} width={FRAME_WIDTH} height={FRAME_HEIGHT} />
+                  <img src={frameUrl(p.slug, 0)} alt="" loading="lazy" data-slug={p.slug} />
+                  {p.slug !== azul.slug && (
+                    <canvas data-card-canvas data-slug={p.slug} width={FRAME_WIDTH} height={FRAME_HEIGHT} />
+                  )}
                 </div>
                 <p className={`label ${styles.cardKind}`}>{pick(p.kind)}</p>
                 <h3 className={styles.cardName}>{p.name}</h3>

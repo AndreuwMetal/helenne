@@ -33,6 +33,7 @@ src/
     layout/           cabecera, pie, menú móvil, buscador, idioma
     story/            portada narrada: escena fija y coreografía del scroll
                       (storyAnimation.ts, claves en services/timeline.ts)
+    three/            modelo 3D del Modelo Azul (three.js): forma, telas y despiece
     product/          secuencias de fotogramas, pieza que gira, tarjeta y galería
     cart/             panel del carrito
     providers/        estado global: idioma y carrito (contexto + hook)
@@ -80,6 +81,14 @@ El recorte usa Vision de macOS, así que el generador solo funciona en un Mac
 
 Para un giro completo de 360°, graba la pieza sola en un plato giratorio,
 con fondo liso y buena luz: el recorte sale mucho más limpio.
+
+## Modelo 3D
+
+El Modelo Azul de la portada es un modelo 3D construido en código
+(`src/components/three/`), no escaneado: forma, rayas y acolchado salen de
+medidas estimadas en los vídeos (`azulSpec` en `pouchView.ts`). Con las medidas
+reales de la pieza basta con cambiar esos números. Las capas (tela, guata y
+forro) son piezas separadas, por eso se puede despiezar.
 
 ## Publicación
 
