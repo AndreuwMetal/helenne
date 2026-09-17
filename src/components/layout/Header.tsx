@@ -8,7 +8,8 @@ import MenuDrawer from './MenuDrawer'
 import SearchPanel from './SearchPanel'
 import styles from './Header.module.css'
 
-export default function Header() {
+/** `overlay`: transparente sobre la portada; el color lo decide la escena. */
+export default function Header({ overlay = false }: { overlay?: boolean }) {
   const { t } = useLanguage()
   const cart = useCart()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -23,27 +24,21 @@ export default function Header() {
   }, [])
 
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
+    <header className={`${styles.header} ${overlay ? styles.overlay : scrolled ? styles.scrolled : ''}`}>
       <div className={styles.inner}>
-        <button type="button" className={`${styles.icon} ${styles.menuButton}`} onClick={() => setMenuOpen(true)}>
-          <MenuIcon />
-          <span className="visually-hidden">{t('nav.menu')}</span>
-        </button>
-
-        <nav className={styles.nav} aria-label={t('nav.menu')}>
-          {mainLinks.map((l) => (
-            <NavLink key={l.to} to={l.to} className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}>
-              {t(l.key)}
-            </NavLink>
-          ))}
-        </nav>
-
         <Link to="/" className={styles.logo} aria-label="Helenne, inicio">
           <span className={styles.logoName}>Helenne</span>
           <span className={styles.logoTag}>handmade</span>
         </Link>
 
         <div className={styles.tools}>
+          <nav className={styles.nav} aria-label={t('nav.menu')}>
+            {mainLinks.map((l) => (
+              <NavLink key={l.to} to={l.to} className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}>
+                {t(l.key)}
+              </NavLink>
+            ))}
+          </nav>
           <LanguageSwitch className={styles.lang} />
           <button type="button" className={styles.icon} onClick={() => setSearchOpen(true)}>
             <SearchIcon />
@@ -59,6 +54,10 @@ export default function Header() {
             <span className="visually-hidden">
               {t('cart.open')} ({cart.count})
             </span>
+          </button>
+          <button type="button" className={`${styles.icon} ${styles.menuButton}`} onClick={() => setMenuOpen(true)}>
+            <MenuIcon />
+            <span className="visually-hidden">{t('nav.menu')}</span>
           </button>
         </div>
       </div>

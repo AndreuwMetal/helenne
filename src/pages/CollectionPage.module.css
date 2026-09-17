@@ -9,10 +9,9 @@
   justify-items: center;
   gap: 14px;
   padding: clamp(56px, 10vw, 120px) 24px;
-  border-radius: var(--radius-stage);
+  border-radius: 0;
   background: var(--stage);
-  outline: 1.5px dashed var(--seam);
-  outline-offset: -12px;
+  border: 1px solid var(--line);
   text-align: center;
 }
 

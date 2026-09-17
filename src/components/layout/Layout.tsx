@@ -7,6 +7,8 @@ import Header from './Header'
 /** Estructura común: cabecera, página, pie y carrito. */
 export default function Layout() {
   const { hash, pathname } = useLocation()
+  // la portada es una escena a pantalla completa con su propio pie
+  const isHome = pathname === '/'
 
   // enlaces del buscador del tipo /accesorios#hestia
   useEffect(() => {
@@ -17,11 +19,11 @@ export default function Layout() {
 
   return (
     <>
-      <Header />
+      <Header overlay={isHome} />
       <main id="contenido">
         <Outlet />
       </main>
-      <Footer />
+      {!isHome && <Footer />}
       <CartDrawer />
       <ScrollRestoration />
     </>

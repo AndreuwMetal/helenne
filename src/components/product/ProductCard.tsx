@@ -18,28 +18,25 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <article className={styles.card} id={product.slug}>
       <ProductSpin product={product} />
-
-      <div className={styles.info}>
-        <div>
-          <h3 className={styles.name}>{product.name}</h3>
-          <p className={styles.kind}>{pick(product.kind)}</p>
-        </div>
-        <p className={styles.price}>
-          {forSale ? (
-            <>
-              {formatPrice(product.price!, lang)} <span className={styles.shipping}>{t('product.shipping')}</span>
-            </>
-          ) : (
-            t('product.soon')
-          )}
-        </p>
-      </div>
-
+      <p className={`label ${styles.kind}`}>{pick(product.kind)}</p>
+      <h3 className={styles.name}>{product.name}</h3>
+      <p className={`label ${styles.tags}`}>{pick(product.tags)}</p>
       <p className={styles.description}>{pick(product.description)}</p>
+      <p className={styles.price}>
+        {forSale ? (
+          <>
+            {formatPrice(product.price!, lang)} <span className={styles.shipping}>{t('product.shipping')}</span>
+          </>
+        ) : (
+          t('product.soon')
+        )}
+      </p>
 
       <div className={styles.actions}>
         {forSale ? (
-          <Button onClick={() => cart.add(product.id)}>{t('action.addToCart')}</Button>
+          <Button variant="outline" onClick={() => cart.add(product.id)}>
+            {t('action.addToCart')}
+          </Button>
         ) : (
           <ButtonExternal variant="outline" href={whatsappUrl(reserveMessage(product.name, lang))}>
             {t('action.reserve')}

@@ -12,7 +12,7 @@
   background: none;
   font-family: var(--font-display);
   font-size: var(--text-2xl);
-  font-weight: 300;
+  font-weight: 400;
   outline: none;
 }
 
@@ -35,7 +35,7 @@
   gap: 16px;
   padding: 10px;
   margin-inline: -10px;
-  border-radius: 12px;
+  border-radius: 0;
   text-decoration: none;
 }
 
@@ -48,7 +48,7 @@
   flex: none;
   width: 52px;
   height: 52px;
-  border-radius: 10px;
+  border-radius: 0;
   object-fit: cover;
   background: var(--stage);
 }

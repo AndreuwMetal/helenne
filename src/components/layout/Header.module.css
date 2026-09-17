@@ -2,113 +2,123 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgb(241 242 239 / 0.86);
-  backdrop-filter: saturate(1.4) blur(12px);
+  color: var(--ink);
+  background: rgb(243 238 225 / 0.9);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.3s var(--ease);
+  transition:
+    border-color 0.3s var(--ease),
+    color 0.4s var(--ease);
 }
 
 .scrolled {
   border-bottom-color: var(--line);
 }
 
+/* portada: sin fondo, el color lo marca la escena según su tono */
+.overlay {
+  background: transparent;
+  backdrop-filter: none;
+  color: var(--header-fg, var(--ink));
+}
+
 .inner {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  height: var(--header-h);
-  width: min(100% - 2 * var(--gutter), var(--content));
-  margin-inline: auto;
-}
-
-.nav {
   display: flex;
-  gap: 28px;
-}
-
-.link {
-  position: relative;
-  padding: 6px 0;
-  font-size: var(--text-sm);
-  text-decoration: none;
-  color: var(--ink-soft);
-  transition: color 0.2s var(--ease);
-}
-
-.link:hover,
-.active {
-  color: var(--ink);
-}
-
-.active::after {
-  content: '';
-  position: absolute;
-  inset: auto 0 0;
-  border-bottom: 1px dashed currentColor;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: var(--header-h);
+  padding-inline: var(--gutter);
 }
 
 .logo {
   display: grid;
-  justify-items: center;
+  justify-items: start;
   text-decoration: none;
   line-height: 1;
 }
 
-/* el logotipo conserva su tipografía y tracking originales */
 .logoName {
-  font-family: var(--font-body);
-  font-size: 1.375rem;
-  letter-spacing: 0.24em;
-  text-indent: 0.24em;
+  font-family: var(--font-logo);
+  font-size: 1.125rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
 }
 
 .logoTag {
-  margin-top: 6px;
+  margin-top: 5px;
   font-size: 0.5rem;
-  letter-spacing: 0.42em;
-  text-indent: 0.42em;
+  letter-spacing: 0.46em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  opacity: 0.6;
 }
 
 .tools {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 4px;
+  gap: 6px;
+}
+
+.nav {
+  display: flex;
+  gap: 30px;
+  margin-right: 22px;
+}
+
+.link {
+  position: relative;
+  padding: 6px 0;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  border-bottom: 1px solid currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+
+.link:hover::after,
+.active::after {
+  transform: scaleX(1);
 }
 
 .lang {
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 .icon {
   position: relative;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border: 0;
-  border-radius: 50%;
   background: none;
 }
 
 .icon:hover {
-  background: rgb(31 42 68 / 0.06);
+  opacity: 0.65;
 }
 
 .badge {
   position: absolute;
   top: 5px;
-  right: 3px;
+  right: 2px;
   display: grid;
   place-items: center;
-  min-width: 17px;
-  height: 17px;
+  min-width: 16px;
+  height: 16px;
   padding: 0 4px;
   border-radius: 999px;
-  background: var(--ink);
+  background: var(--gold);
   color: var(--paper);
   font-size: 0.625rem;
   font-weight: 500;
@@ -119,10 +129,6 @@
 }
 
 @media (max-width: 820px) {
-  .inner {
-    grid-template-columns: auto 1fr auto;
-  }
-
   .nav,
   .lang {
     display: none;
@@ -130,15 +136,6 @@
 
   .menuButton {
     display: grid;
-    margin-left: -10px;
-  }
-
-  .logo {
-    justify-items: start;
-    padding-left: 6px;
-  }
-
-  .logoName {
-    font-size: 1.125rem;
+    order: 3;
   }
 }

@@ -18,6 +18,8 @@ export interface Product {
   collection: CollectionSlug
   kind: Localized
   description: Localized
+  /** Etiquetas cortas bajo el nombre (tela, acabado). */
+  tags: Localized
   /** Precio en céntimos. `null` = todavía no se vende. */
   price: number | null
   /** Color del escenario donde gira la pieza. */
@@ -79,6 +81,7 @@ export const products: Product[] = [
     name: 'Modelo Hestia',
     collection: 'accesorios',
     kind: pencilCase,
+    tags: { es: 'Cuadros · Cremallera metálica', en: 'Check · Metal zip' },
     description: {
       es: 'Tela de cuadros en tonos grises y azules, con cremallera metálica.',
       en: 'Grey and blue check fabric with a metal zip.',
@@ -95,6 +98,7 @@ export const products: Product[] = [
     name: 'Modelo Rose',
     collection: 'accesorios',
     kind: pencilCase,
+    tags: { es: 'Encaje · Burdeos', en: 'Lace · Burgundy' },
     description: {
       es: 'Encaje en color burdeos, con cremallera metálica.',
       en: 'Burgundy lace with a metal zip.',
@@ -111,6 +115,7 @@ export const products: Product[] = [
     name: 'Modelo Hada',
     collection: 'accesorios',
     kind: pouch,
+    tags: { es: 'Acolchado · Estampado', en: 'Quilted · Print' },
     description: {
       es: 'Acolchado de tela estampada en tonos frambuesa y gris.',
       en: 'Quilted printed fabric in raspberry and grey.',
@@ -127,6 +132,7 @@ export const products: Product[] = [
     name: 'Modelo Azul',
     collection: 'accesorios',
     kind: pouch,
+    tags: { es: 'Rayas · Acolchado', en: 'Stripes · Quilted' },
     description: {
       es: 'Acolchado de rayas finas azules y blancas, con cremallera blanca.',
       en: 'Quilted fine blue-and-white stripes with a white zip.',
@@ -139,24 +145,36 @@ export const products: Product[] = [
   },
 ]
 
-/** Detalles del Modelo Azul para la portada (solo lo que se ve en la pieza). */
-export const azulDetails: { title: Localized; text: Localized }[] = [
+/** Notas alrededor del Modelo Azul (solo lo que se ve en la pieza). */
+export const azulNotes: { title: Localized; tag: Localized; text: Localized }[] = [
   {
     title: { es: 'Rayas', en: 'Stripes' },
-    text: { es: 'Tela de rayas finas en azul y blanco.', en: 'Fine blue-and-white striped fabric.' },
+    tag: { es: 'Azul · Blanco', en: 'Blue · White' },
+    text: { es: 'Tela de rayas finas, de las que no cansan.', en: 'Fine striped fabric that never tires the eye.' },
   },
   {
     title: { es: 'Acolchado', en: 'Quilting' },
-    text: { es: 'Pespuntes paralelos que le dan cuerpo sin volverlo rígido.', en: 'Parallel stitching that gives it body without stiffness.' },
+    tag: { es: 'Pespunte paralelo', en: 'Parallel stitch' },
+    text: { es: 'Le da cuerpo sin volverlo rígido.', en: 'Gives it body without stiffness.' },
   },
   {
     title: { es: 'Cremallera', en: 'Zip' },
-    text: { es: 'Blanca, con un tirador de tela a juego.', en: 'White, with a matching fabric pull.' },
+    tag: { es: 'Blanca · Tirador de tela', en: 'White · Fabric pull' },
+    text: { es: 'A juego con el ribete.', en: 'Matching the piping.' },
   },
   {
     title: { es: 'Forro', en: 'Lining' },
-    text: { es: 'Interior claro, para encontrar todo de un vistazo.', en: 'A light interior, so you can find everything at a glance.' },
+    tag: { es: 'Interior claro', en: 'Light interior' },
+    text: { es: 'Todo se encuentra de un vistazo.', en: 'Everything is easy to find.' },
   },
+]
+
+/** Datos de la sección oscura de la portada. */
+export const azulFacts: { label: Localized; text: Localized }[] = [
+  { label: { es: 'Tela', en: 'Fabric' }, text: { es: 'rayas finas azules y blancas.', en: 'fine blue and white stripes.' } },
+  { label: { es: 'Acolchado', en: 'Quilting' }, text: { es: 'pespuntes paralelos, blando al tacto.', en: 'parallel stitching, soft to the touch.' } },
+  { label: { es: 'Cremallera', en: 'Zip' }, text: { es: 'blanca, con tirador de tela.', en: 'white, with a fabric pull.' } },
+  { label: { es: 'Costura', en: 'Sewing' }, text: { es: 'a mano, pieza a pieza.', en: 'by hand, piece by piece.' } },
 ]
 
 export const findProduct = (id: string) => products.find((p) => p.id === id)

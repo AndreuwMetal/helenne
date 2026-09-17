@@ -60,7 +60,7 @@
 .stage img {
   max-width: 100%;
   max-height: 100%;
-  border-radius: 14px;
+  border-radius: 0;
   object-fit: contain;
 }
 
@@ -103,7 +103,7 @@
   height: 64px;
   padding: 0;
   border: 2px solid transparent;
-  border-radius: 10px;
+  border-radius: 0;
   overflow: hidden;
   background: none;
   opacity: 0.55;

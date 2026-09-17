@@ -9,10 +9,9 @@
   display: grid;
   gap: 22px;
   padding: clamp(28px, 4vw, 44px);
-  border-radius: var(--radius-stage);
+  border-radius: 0;
   background: var(--paper-raised);
-  outline: 1.5px dashed var(--seam);
-  outline-offset: -12px;
+  border: 1px solid var(--line);
 }
 
 .field {
@@ -52,7 +51,7 @@
   aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: 50% 62%;
-  border-radius: var(--radius-stage);
+  border-radius: 0;
 }
 
 @media (max-width: 860px) {

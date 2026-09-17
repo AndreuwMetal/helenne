@@ -1,33 +1,36 @@
-/* Paleta sacada de las telas: papel frío, tinta índigo (las rayas del Azul) y
-   un escenario de estudio por pieza (ver `tint` en services/catalog.ts). */
+/* Estilo editorial de lujo: crema y negro cálido, dorado como acento,
+   serif de alto contraste para titulares y etiquetas pequeñas espaciadas. */
 :root {
-  --paper: #f1f2ef;
-  --paper-raised: #f8f8f6;
-  --ink: #1f2a44;
-  --ink-soft: #5a6275;
-  --line: #d8dbe1;
-  --stage: #e6e9ee;
-  --seam: rgb(31 42 68 / 0.22);
-  --focus: #3b5bdb;
+  --paper: #f3eee1;
+  --paper-raised: #f8f5ec;
+  --ink: #1d1914;
+  --ink-soft: #6d665b;
+  --line: #ddd5c3;
+  --dark: #17140f;
+  --dark-line: rgb(243 238 225 / 0.14);
+  --gold: #a4854f;
+  --gold-light: #cdb285;
+  --stage: #eae3d2;
+  --focus: #8a6a2f;
 
-  --font-display: 'Petrona', Georgia, serif;
-  --font-body: 'Proza Libre', system-ui, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-logo: 'Proza Libre', system-ui, sans-serif;
 
-  /* escala tipográfica (razón 1,25) */
+  --text-xs: 0.6875rem;
   --text-sm: 0.8125rem;
-  --text-base: 1rem;
-  --text-lg: 1.25rem;
-  --text-xl: 1.5625rem;
-  --text-2xl: 1.953rem;
-  --text-3xl: clamp(2.2rem, 1.6rem + 2.6vw, 3.815rem);
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: clamp(2.6rem, 1.4rem + 4.2vw, 5.6rem);
 
-  --radius-stage: 20px;
-  --radius-control: 999px;
-  --radius-field: 8px;
+  --radius-control: 0;
+  --radius-field: 0;
 
-  --gutter: clamp(20px, 4vw, 56px);
-  --content: 1240px;
-  --header-h: 76px;
+  --gutter: clamp(20px, 4vw, 64px);
+  --content: 1320px;
+  --header-h: 72px;
 
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }

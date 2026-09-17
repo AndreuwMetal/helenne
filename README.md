@@ -31,7 +31,9 @@ src/
     NotFoundPage      cualquier otra dirección
   components/
     layout/           cabecera, pie, menú móvil, buscador, idioma
-    product/          pieza que gira (ProductSpin), tarjeta y galería
+    story/            portada narrada: escena fija y coreografía del scroll
+                      (storyAnimation.ts, claves en services/timeline.ts)
+    product/          secuencias de fotogramas, pieza que gira, tarjeta y galería
     cart/             panel del carrito
     providers/        estado global: idioma y carrito (contexto + hook)
     ui/               piezas genéricas: botones y panel lateral
@@ -41,6 +43,7 @@ src/
     whatsapp.ts       enlaces y mensajes de pedido
     i18n.ts           textos en español e inglés
     search.ts         buscador
+    timeline.ts       interpolación de la animación (probada en timeline.test.ts)
     format.ts         precios
     storage.ts        localStorage seguro
   styles/             variables de diseño y estilos base
