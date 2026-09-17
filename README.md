@@ -13,7 +13,7 @@ npm install
 npm run dev       # servidor de desarrollo en http://localhost:5173
 npm test          # pruebas (Vitest)
 npm run lint      # oxlint
-npm run build     # compila a dist/ (incluye 404.html para las rutas)
+npm run build     # compila a dist/ (con una página por ruta para GitHub Pages)
 npm run preview   # sirve dist/ en local
 ```
 
@@ -52,6 +52,7 @@ public/
   textures/           fotos de las telas para los modelos 3D
   img/products/       fotos de cada modelo
   CNAME               dominio de GitHub Pages
+scripts/route-pages.mjs  copia index.html para cada ruta al compilar
 ```
 
 Cada componente lleva su hoja de estilos al lado (`*.module.css`).
