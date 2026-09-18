@@ -46,8 +46,9 @@ describe('mensaje de pedido', () => {
   })
 
   it('no incluye piezas que aún no se venden', () => {
-    const msg = orderMessage([{ id: 'modelo-azul', qty: 1 }], products, 'en')
-    expect(msg).not.toContain('Modelo Azul')
+    const unsold = { ...products[0], id: 'sin-precio', name: 'Modelo Futuro', price: null }
+    const msg = orderMessage([{ id: 'sin-precio', qty: 1 }], [...products, unsold], 'en')
+    expect(msg).not.toContain('Modelo Futuro')
     expect(msg).toContain('Total: €0.00')
   })
 })

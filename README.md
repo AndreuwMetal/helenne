@@ -31,7 +31,8 @@ src/
     NotFoundPage      cualquier otra dirección
   components/
     layout/           cabecera, pie, menú móvil, buscador, idioma
-    story/            portada narrada: escena fija y coreografía del scroll
+    story/            portada narrada: escena fija y coreografía del scroll;
+                      sequenceView.ts dibuja las piezas que tienen fotogramas
                       (storyAnimation.ts, claves en services/timeline.ts)
     three/            modelos 3D (three.js): fichas, forma, telas, despiece y escena
     product/          modelo 3D interactivo, tarjeta y galería
@@ -49,10 +50,14 @@ src/
     storage.ts        localStorage seguro
   styles/             variables de diseño y estilos base
 public/
+  seq/<pieza>/<ancho>/  fotogramas del giro y del despiece (720 y 1280 px)
   textures/           fotos de las telas para los modelos 3D
   img/products/       fotos de cada modelo
   CNAME               dominio de GitHub Pages
 scripts/route-pages.mjs  copia index.html para cada ruta al compilar
+scripts/sequence/     vídeo de la pieza → fotogramas recortados con su sombra
+                      (build.sh; revolution.py saca una vuelta en un solo sentido,
+                      align.py encaja el despiece con el giro)
 ```
 
 Cada componente lleva su hoja de estilos al lado (`*.module.css`).

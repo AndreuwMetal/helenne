@@ -4,7 +4,7 @@ dist
 *.local
 *.log
 
-# vídeos originales (pesados; las secuencias generadas están en public/frames)
+# vídeos originales (pesados; las secuencias generadas están en public/seq)
 videos/
 
 # sistema y editores
@@ -13,3 +13,6 @@ videos/
 .vscode/*
 !.vscode/extensions.json
 .playwright-mcp
+
+# binario compilado del recorte
+scripts/sequence/.mask

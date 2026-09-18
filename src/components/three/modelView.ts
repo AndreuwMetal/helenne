@@ -30,7 +30,9 @@ export function createModelView(canvas: HTMLCanvasElement, slug: string): ModelV
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
   scene.environmentIntensity = 0.35
 
-  const camera = new THREE.PerspectiveCamera(26, 16 / 10, 1, 400)
+  // algo de perspectiva: con un tele puro, las piezas alargadas y simétricas
+// parecen girar a ratos hacia el lado contrario (ilusión de profundidad)
+const camera = new THREE.PerspectiveCamera(34, 16 / 10, 1, 400)
 
   const key = new THREE.DirectionalLight('#fff4e6', 1.7)
   key.position.set(-30, 60, 40)
@@ -86,7 +88,7 @@ export function createModelView(canvas: HTMLCanvasElement, slug: string): ModelV
 
   /** Al despiezar, la cámara se aleja para que quepan todas las capas. */
   const frame = (explode: number) => {
-    const k = size / 22
+    const k = (size / 22) * 0.76 // 0.76 compensa el ángulo más abierto
     camera.position.set(0, (18 + 8 * explode) * k, (78 + 34 * explode) * k)
     camera.lookAt(0, (0.5 + 2 * explode) * k, 0)
   }

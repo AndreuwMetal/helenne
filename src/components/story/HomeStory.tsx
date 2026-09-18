@@ -1,19 +1,20 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router'
 import { azulFacts, azulNotes, findProductBySlug, productsIn } from '../../services/catalog'
 import { formatPrice } from '../../services/format'
 import { reserveMessage, whatsappUrl } from '../../services/whatsapp'
 import { useCart } from '../providers/cartContext'
 import { useLanguage } from '../providers/languageContext'
+import { createSequenceView, SEQUENCES } from './sequenceView'
 import { createStoryAnimation, RANGES } from './storyAnimation'
 import styles from './HomeStory.module.css'
 
 const azul = findProductBySlug('azul')!
-// el Azul abre el carrusel: la pieza que gira se convierte en su tarjeta
+// el LightBlue abre el carrusel: la pieza que gira se convierte en su tarjeta
 const collection = [azul, ...productsIn('accesorios').filter((p) => p.id !== azul.id)]
 
 /**
- * Portada narrada: una escena fija en la que el Modelo Azul gira y se
+ * Portada narrada: una escena fija en la que el Modelo LightBlue gira y se
  * desplaza mientras cambian el fondo y las secciones. La animación vive en
  * storyAnimation.ts; aquí solo está el contenido.
  */
@@ -21,20 +22,22 @@ export default function HomeStory() {
   const { t, pick, lang } = useLanguage()
   const cart = useCart()
   const rootRef = useRef<HTMLDivElement>(null)
-  const [reserved, setReserved] = useState(false)
-  const [name, setName] = useState('')
 
   useEffect(() => {
     const root = rootRef.current
     if (!root) return
-    // los modelos 3D (three.js) se descargan aparte para no frenar la primera carga
+    // los modelos 3D (three.js) se descargan aparte para no frenar la primera carga;
+    // las piezas que ya tienen fotogramas (SEQUENCES) se dibujan con ellos
     let cleanup: (() => void) | undefined
     let cancelled = false
     import('../three/modelView').then(({ createModelView }) => {
       if (cancelled) return
       const open = (canvas: HTMLCanvasElement, slug: string) => {
+        const still = canvas.previousElementSibling as HTMLElement
+        const hide = () => (still.style.visibility = 'hidden')
+        if (SEQUENCES[slug]) return createSequenceView(canvas, slug, hide)
         const view = createModelView(canvas, slug)
-        ;(canvas.previousElementSibling as HTMLElement).style.visibility = 'hidden'
+        hide()
         return view
       }
       const main = open(root.querySelector<HTMLCanvasElement>('[data-piece] canvas')!, azul.slug)
@@ -57,22 +60,6 @@ export default function HomeStory() {
       cleanup?.()
     }
   }, [])
-
-  const onReserve = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const who = name.trim()
-    const text = reserveMessage(azul.name, lang) + (who ? (lang === 'es' ? ` Me llamo ${who}.` : ` My name is ${who}.`) : '')
-    window.open(whatsappUrl(text), '_blank', 'noopener')
-    setReserved(true)
-  }
-
-  // la reserva está dentro de la escena fija: se llega llevando el scroll a su tramo
-  const scrollToReserve = () => {
-    const root = rootRef.current
-    if (!root) return
-    const top = root.offsetTop + (root.offsetHeight - innerHeight) * (RANGES.reserve[0] + 0.03)
-    scrollTo({ top, behavior: 'smooth' })
-  }
 
   const panel = (key: keyof typeof RANGES) => ({ 'data-panel': key, className: `${styles.panel} ${styles[key]}` })
 
@@ -154,9 +141,9 @@ export default function HomeStory() {
                 <p className={`label ${styles.cardTags}`}>{pick(p.tags)}</p>
                 <p className={styles.cardPrice}>{p.price === null ? t('product.soon') : formatPrice(p.price, lang)}</p>
                 {p.price === null ? (
-                  <button type="button" className={styles.lineButton} onClick={scrollToReserve}>
-                    {t('story.reserveButton')}
-                  </button>
+                  <a className={styles.lineButton} href={whatsappUrl(reserveMessage(p.name, lang))} target="_blank" rel="noopener">
+                    {t('action.reserve')}
+                  </a>
                 ) : (
                   <button type="button" className={styles.lineButton} onClick={() => cart.add(p.id)}>
                     {t('action.addToCart')}
@@ -167,32 +154,19 @@ export default function HomeStory() {
           </div>
         </section>
 
-        {/* 5 · reserva (oscuro) y pie */}
+        {/* 5 · compra (oscuro) y pie */}
         <section {...panel('reserve')}>
           <p className={`label ${styles.eyebrow} ${styles.centered}`}>{t('story.reserveEyebrow')}</p>
           <h2 className={styles.reserveTitle}>
             {t('story.reserveTitle1')} <em>{t('story.reserveTitle2')}</em>.
           </h2>
           <p className={styles.reserveText}>{t('story.reserveText')}</p>
-          {reserved ? (
-            <p className={styles.done} role="status">
-              {t('story.reserveDone')}
-            </p>
-          ) : (
-            <form className={styles.form} onSubmit={onReserve}>
-              <input
-                aria-label={t('story.reservePlaceholder')}
-                placeholder={t('story.reservePlaceholder')}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                autoComplete="given-name"
-              />
-              <button type="submit" className="label">
-                {t('story.reserveButton')}
-              </button>
-            </form>
-          )}
+          <p className={styles.buyPrice}>
+            {formatPrice(azul.price ?? 0, lang)} <span>{t('product.shipping')}</span>
+          </p>
+          <button type="button" className={styles.buyButton} onClick={() => cart.add(azul.id)}>
+            {t('action.addToCart')}
+          </button>
           <footer className={styles.footer}>
             <span className="label">Helenne — handmade</span>
             <span className="label">{t('story.footerCraft')}</span>

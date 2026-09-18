@@ -31,17 +31,20 @@ const background: Keys<readonly number[]> = [
 
 const TAU = Math.PI * 2
 
-/** Giro del modelo (radianes): tres cuartos, despiece, espalda, vuelta completa. */
+/**
+ * Giro de la pieza (radianes): tres cuartos, una vuelta entera al entrar en
+ * «La pieza» para llegar al despiece en la misma postura en que empieza el
+ * vídeo del despiece, la espalda en la sección oscura y otra vuelta hasta la
+ * tarjeta de la colección.
+ */
 const turn: Keys<number> = [
   [0, -0.3],
   [0.06, -0.3],
-  [0.19, 0.95],
-  [0.34, 1.15],
-  [0.41, 2.2],
-  [0.57, 3.6],
-  [0.66, TAU - 0.3],
-  [0.88, TAU - 0.3],
-  [1, TAU - 0.3],
+  [0.16, TAU - 0.3],
+  [0.39, TAU - 0.3],
+  [0.57, TAU + Math.PI - 0.3],
+  [0.66, 2 * TAU - 0.3],
+  [1, 2 * TAU - 0.3],
 ]
 
 /** Despiece de capas: se abre en «La pieza» y se vuelve a cerrar. */
@@ -68,8 +71,8 @@ type Pose = readonly [number, number, number, number, number]
 const desktop: Keys<Pose> = [
   [0, [2, 12, 0.78, 0, 1]],
   [0.06, [2, 12, 0.78, 0, 1]],
-  [0.16, [0, 9, 1, 0, 1]],
-  [0.37, [0, 9, 1, 0, 1]],
+  [0.16, [11, 9, 1, 0, 1]], // a la derecha: el despiece se abre hacia la izquierda
+  [0.37, [11, 9, 1, 0, 1]],
   [0.44, [19, 3, 0.72, -3, 1]],
   [0.57, [19, 3, 0.72, 3, 1]],
   [0.62, [4, 14, 0.5, -6, 1]],
@@ -148,6 +151,8 @@ export function createStoryAnimation(root: HTMLElement, piece: PieceView, cards:
     const bg = at(background, p)
     const dark = bg[0] < 120
     root.style.setProperty('--bg', rgb(bg))
+    // 0 en crema, 1 en oscuro: enciende el foco bajo la pieza (HomeStory.module.css)
+    root.style.setProperty('--dark', String(clamp((CREAM[0] - bg[0]) / (CREAM[0] - DARK[0]))))
     root.dataset.tone = dark ? 'dark' : 'light'
     docStyle.setProperty('--header-fg', dark ? 'var(--paper)' : 'var(--ink)')
 

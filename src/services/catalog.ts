@@ -125,7 +125,7 @@ export const products: Product[] = [
   {
     id: 'modelo-azul',
     slug: 'azul',
-    name: 'Modelo Azul',
+    name: 'Modelo LightBlue',
     collection: 'accesorios',
     kind: pouch,
     tags: { es: 'Rayas · Acolchado', en: 'Stripes · Quilted' },
@@ -133,43 +133,46 @@ export const products: Product[] = [
       es: 'Acolchado de rayas finas azules y blancas, con cremallera blanca.',
       en: 'Quilted fine blue-and-white stripes with a white zip.',
     },
-    price: null,
+    price: 1600, // igual que el Hada
     photos: [],
-    thumb: '/img/products/azul/modelo.png',
-    still: '/img/products/azul/modelo.png',
+    thumb: '/seq/azul/720/turn/000.webp',
+    still: '/seq/azul/720/turn/000.webp',
   },
 ]
 
-/** Notas alrededor del Modelo Azul (solo lo que se ve en la pieza). */
+/** Notas alrededor del LightBlue en «La pieza» (solo lo que se ve en ella). */
 export const azulNotes: { title: Localized; tag: Localized; text: Localized }[] = [
   {
     title: { es: 'Rayas', en: 'Stripes' },
-    tag: { es: 'Azul · Blanco', en: 'Blue · White' },
-    text: { es: 'Tela de rayas finas, de las que no cansan.', en: 'Fine striped fabric that never tires the eye.' },
+    tag: { es: 'Azul marino · Blanco', en: 'Navy · White' },
+    text: { es: 'Finas como un trazo de lápiz. De las que no cansan nunca.', en: 'Fine as a pencil line. The kind you never tire of.' },
   },
   {
     title: { es: 'Acolchado', en: 'Quilting' },
     tag: { es: 'Pespunte paralelo', en: 'Parallel stitch' },
-    text: { es: 'Le da cuerpo sin volverlo rígido.', en: 'Gives it body without stiffness.' },
+    text: {
+      es: 'Una capa mullida entre tela y forro: cuida lo que llevas y mantiene la forma.',
+      en: 'A soft layer between fabric and lining: it protects what you carry and keeps its shape.',
+    },
   },
   {
     title: { es: 'Cremallera', en: 'Zip' },
     tag: { es: 'Blanca · Tirador de tela', en: 'White · Fabric pull' },
-    text: { es: 'A juego con el ribete.', en: 'Matching the piping.' },
+    text: { es: 'Corre de punta a punta y se abre con dos dedos.', en: 'Runs end to end and opens with two fingers.' },
   },
   {
     title: { es: 'Forro', en: 'Lining' },
     tag: { es: 'Interior claro', en: 'Light interior' },
-    text: { es: 'Todo se encuentra de un vistazo.', en: 'Everything is easy to find.' },
+    text: { es: 'Claro por dentro, para que nada se esconda en el fondo.', en: 'Light inside, so nothing hides at the bottom.' },
   },
 ]
 
 /** Datos de la sección oscura de la portada. */
 export const azulFacts: { label: Localized; text: Localized }[] = [
-  { label: { es: 'Tela', en: 'Fabric' }, text: { es: 'rayas finas azules y blancas.', en: 'fine blue and white stripes.' } },
-  { label: { es: 'Acolchado', en: 'Quilting' }, text: { es: 'pespuntes paralelos, blando al tacto.', en: 'parallel stitching, soft to the touch.' } },
-  { label: { es: 'Cremallera', en: 'Zip' }, text: { es: 'blanca, con tirador de tela.', en: 'white, with a fabric pull.' } },
-  { label: { es: 'Costura', en: 'Sewing' }, text: { es: 'a mano, pieza a pieza.', en: 'by hand, piece by piece.' } },
+  { label: { es: 'Tela', en: 'Fabric' }, text: { es: 'rayas finas en azul marino y blanco, de las que combinan con todo.', en: 'fine navy and white stripes that go with everything.' } },
+  { label: { es: 'Acolchado', en: 'Quilting' }, text: { es: 'pespuntes paralelos que le dan cuerpo sin quitarle blandura.', en: 'parallel stitching that gives it body and keeps it soft.' } },
+  { label: { es: 'Cremallera', en: 'Zip' }, text: { es: 'blanca, con tirador de tela a juego con el ribete.', en: 'white, with a fabric pull matching the piping.' } },
+  { label: { es: 'Costura', en: 'Sewing' }, text: { es: 'a mano, una puntada detrás de otra, sin atajos.', en: 'by hand, one stitch after another, no shortcuts.' } },
 ]
 
 export const findProduct = (id: string) => products.find((p) => p.id === id)
