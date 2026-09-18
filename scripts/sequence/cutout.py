@@ -32,7 +32,13 @@ shadow = np.clip((bgl - lum) / bgl * 1.6 - 0.035, 0, 0.6)
 # lo blanco que Vision no ve (la cinta de la cremallera flotando) es más claro
 # que el fondo y neutro, mientras que el fondo es crema (rojo > azul): también es pieza
 neutral = np.clip((10 - (rgb[..., 0] - rgb[..., 2])) / 6, 0, 1)
-bright = np.clip((lum - bgl - 6) / 10, 0, 1) * neutral
+# ...pero solo pegado a lo que Vision sí ve (a menos de ~1/16 del ancho): más
+# lejos es el fondo aclarado por la luz fría de la ventana, no la pieza.
+# ponytail: corta también las piezas blancas que floten más lejos; el despiece
+# del LightBlue (cinta de la cremallera) se hizo antes de esta regla.
+vision = Image.fromarray((m > 0.5).astype(np.uint8) * 255).resize(small_size)
+close = np.asarray(vision.filter(ImageFilter.MaxFilter(23)).resize((w, h))) > 0
+bright = np.clip((lum - bgl - 10) / 10, 0, 1) * neutral * close
 bright = Image.fromarray((bright * 255).astype(np.uint8)).filter(ImageFilter.MedianFilter(odd(5)))
 m = np.maximum(m, np.asarray(bright).astype(np.float32) / 255)
 # la sombra solo vale cerca y por debajo de la pieza: fuera de ahí son restos

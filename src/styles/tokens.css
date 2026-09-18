@@ -1,16 +1,16 @@
-/* Estilo editorial de lujo: crema y negro cálido, dorado como acento,
+/* Estilo editorial de lujo: blanco nieve y negro cálido, dorado como acento,
    serif de alto contraste para titulares y etiquetas pequeñas espaciadas. */
 :root {
-  --paper: #f3eee1;
-  --paper-raised: #f8f5ec;
+  --paper: #fffafa; /* blanco nieve */
+  --paper-raised: #ffffff;
   --ink: #1d1914;
   --ink-soft: #6d665b;
-  --line: #ddd5c3;
+  --line: #e7e0da;
   --dark: #17140f;
   --dark-line: rgb(243 238 225 / 0.14);
   --gold: #a4854f;
   --gold-light: #cdb285;
-  --stage: #eae3d2;
+  --stage: #f4eeea;
   --focus: #8a6a2f;
 
   --font-display: 'Playfair Display', Georgia, serif;

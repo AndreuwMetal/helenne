@@ -56,8 +56,8 @@ public/
   CNAME               dominio de GitHub Pages
 scripts/route-pages.mjs  copia index.html para cada ruta al compilar
 scripts/sequence/     vídeo de la pieza → fotogramas recortados con su sombra
-                      (build.sh; revolution.py saca una vuelta en un solo sentido,
-                      align.py encaja el despiece con el giro)
+                      (piece.sh <pieza> <giro.mp4> lo hace todo; revolution.py saca
+                      una vuelta en un solo sentido, align.py encaja el despiece)
 ```
 
 Cada componente lleva su hoja de estilos al lado (`*.module.css`).

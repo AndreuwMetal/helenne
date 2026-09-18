@@ -88,7 +88,7 @@ export const products: Product[] = [
     price: 1200,
     photos: photos('hestia', 9),
     thumb: '/img/products/hestia/thumb.jpg',
-    still: '/img/products/hestia/modelo.png',
+    still: '/seq/hestia/720/turn/000.webp',
   },
   {
     id: 'modelo-rose',
@@ -120,7 +120,7 @@ export const products: Product[] = [
     price: 1600,
     photos: photos('hada', 5),
     thumb: '/img/products/hada/thumb.jpg',
-    still: '/img/products/hada/modelo.png',
+    still: '/seq/hada/720/turn/000.webp',
   },
   {
     id: 'modelo-azul',

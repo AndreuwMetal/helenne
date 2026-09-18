@@ -2,12 +2,15 @@ import type { PieceView } from './storyAnimation'
 
 /**
  * Pieza fotorrealista a partir de fotogramas (public/seq/<pieza>/<ancho>/):
- * un giro completo y un despiece, recortados con su sombra (scripts/sequence).
+ * un giro completo y, si lo hay (explode > 0), un despiece, recortados con su
+ * sombra (scripts/sequence).
  * El scroll elige el fotograma; así la pieza se ve como en una foto de
  * producto y no como un modelo 3D.
  */
 export const SEQUENCES: Record<string, { turn: number; explode: number }> = {
   azul: { turn: 96, explode: 63 },
+  hestia: { turn: 96, explode: 0 },
+  hada: { turn: 96, explode: 0 },
 }
 
 /** Anchos disponibles de cada fotograma: se usa el menor que llene el lienzo. */
@@ -36,7 +39,7 @@ export function createSequenceView(canvas: HTMLCanvasElement, slug: string, onRe
   const turn = load('turn', counts.turn)
   // el despiece se pide después, cuando el giro ya está en camino
   let explode: HTMLImageElement[] = []
-  const later = setTimeout(() => (explode = load('explode', counts.explode)), 1200)
+  const later = counts.explode ? setTimeout(() => (explode = load('explode', counts.explode)), 1200) : 0
 
   const state = { turn: START_TURN, explode: 0 }
 
