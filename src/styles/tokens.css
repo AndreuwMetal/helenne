@@ -1,17 +1,17 @@
-/* Estilo editorial de lujo: blanco nieve y negro cálido, dorado como acento,
+/* Estilo editorial de lujo: blanco roto y negro cálido, azul pizarra como acento,
    serif de alto contraste para titulares y etiquetas pequeñas espaciadas. */
 :root {
-  --paper: #fffafa; /* blanco nieve */
+  --paper: #f7f7f5;
   --paper-raised: #ffffff;
   --ink: #1d1914;
-  --ink-soft: #6d665b;
-  --line: #e7e0da;
+  --ink-soft: #66686c;
+  --line: #e4e4e4;
   --dark: #17140f;
-  --dark-line: rgb(243 238 225 / 0.14);
-  --gold: #a4854f;
-  --gold-light: #cdb285;
-  --stage: #f4eeea;
-  --focus: #8a6a2f;
+  --dark-line: rgb(247 247 245 / 0.14);
+  --blue: #4b5a6f;
+  --blue-light: #9aa8bd; /* el mismo azul, legible sobre negro */
+  --stage: #ededeb;
+  --focus: #4b5a6f;
 
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', system-ui, sans-serif;

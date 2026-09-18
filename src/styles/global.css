@@ -36,7 +36,7 @@ h3 {
 h1 em,
 h2 em {
   font-style: italic;
-  color: var(--gold);
+  color: var(--accent, var(--blue)); /* en la portada, --accent se aclara sobre negro */
 }
 
 /* etiqueta pequeña en mayúsculas espaciadas */

@@ -13,18 +13,18 @@ export const RANGES = {
   reserve: [0.9, 1],
 } as const
 
-const SNOW = [255, 250, 250] // blanco nieve, como --paper
+const PAPER = [247, 247, 245] // como --paper
 const DARK = [23, 20, 15]
-const MIST = [196, 189, 174] // gris cálido que aparece al pasar de oscuro a crema
+const MIST = [196, 198, 202] // gris que aparece al pasar de oscuro a claro
 
 const background: Keys<readonly number[]> = [
-  [0, SNOW],
-  [0.39, SNOW],
+  [0, PAPER],
+  [0.39, PAPER],
   [0.44, DARK],
   [0.57, DARK],
   [0.61, MIST],
-  [0.65, SNOW],
-  [0.86, SNOW],
+  [0.65, PAPER],
+  [0.86, PAPER],
   [0.9, DARK],
   [1, DARK],
 ]
@@ -152,7 +152,7 @@ export function createStoryAnimation(root: HTMLElement, piece: PieceView, cards:
     const dark = bg[0] < 120
     root.style.setProperty('--bg', rgb(bg))
     // 0 en blanco, 1 en oscuro: enciende el foco bajo la pieza (HomeStory.module.css)
-    root.style.setProperty('--dark', String(clamp((SNOW[0] - bg[0]) / (SNOW[0] - DARK[0]))))
+    root.style.setProperty('--dark', String(clamp((PAPER[0] - bg[0]) / (PAPER[0] - DARK[0]))))
     root.dataset.tone = dark ? 'dark' : 'light'
     docStyle.setProperty('--header-fg', dark ? 'var(--paper)' : 'var(--ink)')
 

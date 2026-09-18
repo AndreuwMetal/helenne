@@ -3,7 +3,7 @@
 .story {
   --bg: var(--paper);
   --fg: var(--ink);
-  --accent: var(--gold);
+  --accent: var(--blue);
   position: relative;
   height: 1100vh;
   margin-top: calc(-1 * var(--header-h)); /* la cabecera flota encima */
@@ -13,7 +13,7 @@
 
 .story[data-tone='dark'] {
   --fg: var(--paper);
-  --accent: var(--gold-light);
+  --accent: var(--blue-light);
 }
 
 .stage {
@@ -36,7 +36,7 @@
   letter-spacing: 0.02em;
   text-transform: uppercase;
   white-space: nowrap;
-  color: #cdbfa6;
+  color: #e4e4e4;
   pointer-events: none;
   will-change: transform, opacity;
 }
@@ -67,8 +67,8 @@
   top: 30%;
   bottom: -6%;
   background:
-    radial-gradient(46% 16% at 50% 72%, rgb(205 178 133 / 0.36), transparent),
-    radial-gradient(48% 52% at 50% 52%, rgb(205 178 133 / 0.14), transparent);
+    radial-gradient(46% 16% at 50% 72%, rgb(154 168 189 / 0.3), transparent),
+    radial-gradient(48% 52% at 50% 52%, rgb(154 168 189 / 0.12), transparent);
   opacity: var(--dark, 0);
   pointer-events: none;
 }
@@ -251,7 +251,7 @@
   padding: 14px 0;
   border-bottom: 1px solid var(--dark-line);
   font-size: var(--text-sm);
-  color: rgb(243 238 225 / 0.78);
+  color: rgb(247 247 245 / 0.78);
 }
 
 .facts :global(.label) {
@@ -273,7 +273,7 @@
 }
 
 .lightButton:hover {
-  background: var(--gold-light);
+  background: var(--blue-light);
 }
 
 /* 4 · la colección */
@@ -380,7 +380,7 @@
   margin-top: 18px;
   max-width: 44ch;
   font-size: var(--text-sm);
-  color: rgb(243 238 225 / 0.72);
+  color: rgb(247 247 245 / 0.72);
 }
 
 .buyPrice {
@@ -393,7 +393,7 @@
 .buyPrice span {
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  color: rgb(243 238 225 / 0.6);
+  color: rgb(247 247 245 / 0.6);
 }
 
 .buyButton {
@@ -411,7 +411,7 @@
 }
 
 .buyButton:hover {
-  background: var(--gold-light);
+  background: var(--blue-light);
 }
 
 .footer {
@@ -424,7 +424,7 @@
   gap: 12px;
   padding-top: 18px;
   border-top: 1px solid var(--dark-line);
-  color: rgb(243 238 225 / 0.55);
+  color: rgb(247 247 245 / 0.55);
 }
 
 /* --- móvil --- */

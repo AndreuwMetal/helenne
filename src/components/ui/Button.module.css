@@ -25,8 +25,8 @@
 }
 
 .solid:hover {
-  background: var(--gold);
-  border-color: var(--gold);
+  background: var(--blue);
+  border-color: var(--blue);
 }
 
 .outline {
@@ -50,7 +50,7 @@
 }
 
 .text:hover {
-  color: var(--gold);
+  color: var(--blue);
 }
 
 .button:disabled {
